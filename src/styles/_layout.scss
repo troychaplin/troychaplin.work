@@ -1,3 +1,7 @@
+// Partials reached via @use do not get the auto-injection from vite.config.ts —
+// that only applies to entries Vite hands to Sass. So import it explicitly here.
+@use 'abstracts' as *;
+
 :root {
   --octave--root-padding-top: 0;
   --octave--root-padding-right: var(--octave--spacing--80);
@@ -70,4 +74,37 @@
 
 .alignfull {
     max-width: var(--octave--layout-full);
+}
+
+.octave-main > * > .octave-group + .octave-group,
+.octave-main > * > .octave-group + :not(.octave-group),
+.octave-main > * > :not(.octave-group) + .octave-group {
+    margin-top: var(--octave--spacing--70);
+
+    @include up($bp-md) {
+        margin-top: var(--octave--spacing--90);
+    }
+}
+
+.octave-main > * > .octave-group.alignfull + .octave-group.alignfull {
+    margin-top: 0;
+}
+
+.octave-group > .has-global-padding {
+    > * + * {
+        margin-block-start: var(--octave--spacing--70);
+    }
+
+    > .octave-group + *,
+    > * + .octave-group {
+        margin-block-start: var(--octave--spacing--70);
+
+        @include up($bp-md) {
+            margin-block-start: var(--octave--spacing--90);
+        }
+    }
+}
+
+.octave-main--padding .octave-group.alignfull:first-child {
+    margin-top: calc(-1 * var(--octave--spacing--90));
 }
