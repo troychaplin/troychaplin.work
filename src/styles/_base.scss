@@ -29,7 +29,7 @@ body {
         color var(--octave--transition-base),
         background-color var(--octave--transition-base);
 
-    @include up($bp-lg) {
+    @include minBreakpoint($break-lg) {
         font-size: var(--octave--font-size--large);
     }
 }

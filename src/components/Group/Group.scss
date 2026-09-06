@@ -1,7 +1,7 @@
 .octave-group {
     padding: var(--octave--spacing--90);
 
-    @include up($bp-md) {
+    @include minBreakpoint($break-md) {
         padding: var(--octave--spacing--110);
     }
     
@@ -10,7 +10,7 @@
             var(--octave--layout-medium) + (var(--octave--spacing--90) * 2)
         ) !important;
 
-        @include up($bp-md) {
+        @include minBreakpoint($break-md) {
             max-width: calc(
                 var(--octave--layout-medium) + (var(--octave--spacing--110) * 2)
             ) !important;

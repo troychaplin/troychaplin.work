@@ -81,7 +81,7 @@
 .octave-main > * > :not(.octave-group) + .octave-group {
     margin-top: var(--octave--spacing--70);
 
-    @include up($bp-md) {
+    @include minBreakpoint($break-md) {
         margin-top: var(--octave--spacing--90);
     }
 }
@@ -99,7 +99,7 @@
     > * + .octave-group {
         margin-block-start: var(--octave--spacing--70);
 
-        @include up($bp-md) {
+        @include minBreakpoint($break-md) {
             margin-block-start: var(--octave--spacing--90);
         }
     }

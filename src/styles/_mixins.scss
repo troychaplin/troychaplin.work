@@ -6,21 +6,21 @@
 // resolved at compile time.
 // -----------------------------------------------------------------------------
 
-$bp-sm: 672px;
-$bp-md: 896px;
-$bp-lg: 1024px;
-$bp-xl: 1280px;
+$break-sm: var(--octave--layout-small);
+$break-md: var(--octave--layout-medium);
+$break-lg: var(--octave--layout-large);
+$break-xl: var(--octave--layout-xlarge);
 
 // Mobile-first. Write the small-screen rules first, then layer with up().
-@mixin up($bp) {
+@mixin minBreakpoint($bp) {
   @media (min-width: $bp) {
     @content;
   }
 }
 
 // Escape hatch for the rare rule that only makes sense below a breakpoint.
-@mixin down($bp) {
-  @media (max-width: ($bp - 0.001rem)) {
+@mixin maxBreakpoint($bp) {
+  @media (max-width: ($bp - 1px)) {
     @content;
   }
 }

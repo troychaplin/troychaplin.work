@@ -3,7 +3,7 @@
     max-width: var(--octave--layout-medium);
     padding-inline: var(--octave--spacing--60);
 
-    @include up($bp-md) {
+    @include minBreakpoint($break-md) {
         padding-inline: var(--octave--spacing--80);
     }
 }
