@@ -1,9 +1,11 @@
+@use 'mixins';
+
 :root {
     // Layout
-    --octave--layout-small: 672px;
-    --octave--layout-medium: 896px;
-    --octave--layout-large: 1024px;
-    --octave--layout-x-large: 1280px;
+    --octave--layout-small: #{mixins.$break-sm};
+    --octave--layout-medium: #{mixins.$break-md};
+    --octave--layout-large: #{mixins.$break-lg};
+    --octave--layout-x-large: #{mixins.$break-xl};
     --octave--layout-full: 100vw;
 
     // Base colors
