@@ -17,6 +17,18 @@ export function Home() {
                 <h2>Group Component</h2>
                 <p>Placeholder for the home page.</p>
             </Group>
+            
+            <Group as="section" bgType="light">
+                <h2>Group Component</h2>
+                <p>Placeholder for the home page.</p>
+            </Group>
+
+            <p>Break between groups</p>
+
+            <Group as="section">
+                <h2>Group Component</h2>
+                <p>Placeholder for the home page.</p>
+            </Group>
         </>
     )
 }

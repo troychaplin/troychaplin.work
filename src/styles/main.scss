@@ -8,5 +8,5 @@
 @use 'reset';
 @use 'base';
 
-// @use 'layout';
-// @use 'typography';
+@use './_new/layout';
+@use './_new/typography';
