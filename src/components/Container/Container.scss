@@ -1,0 +1,10 @@
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  padding-inline: var(--space-4);
+  margin-inline: auto;
+
+  @include up($bp-md) {
+    padding-inline: var(--space-6);
+  }
+}

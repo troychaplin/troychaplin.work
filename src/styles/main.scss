@@ -1,0 +1,9 @@
+// -----------------------------------------------------------------------------
+// Global stylesheet. Imported once, from src/main.tsx.
+// Component styles live beside their component and are imported there.
+// -----------------------------------------------------------------------------
+
+@use 'fonts';
+@use 'tokens';
+@use 'reset';
+@use 'base';

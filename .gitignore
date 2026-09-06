@@ -1,1 +1,5 @@
 node_modules/
+dist/
+.spacefast/
+*.local
+.DS_Store

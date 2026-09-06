@@ -1,0 +1,30 @@
+.layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100svh;
+
+  &__main {
+    flex: 1;
+    padding-block: var(--space-8) var(--space-10);
+  }
+
+  &__skip-link {
+    @include visually-hidden;
+
+    &:focus-visible {
+      @include focus-ring;
+
+      position: fixed;
+      top: var(--space-3);
+      left: var(--space-3);
+      z-index: var(--z-overlay);
+      width: auto;
+      height: auto;
+      padding: var(--space-2) var(--space-4);
+      clip-path: none;
+      background-color: var(--color-bg);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-md);
+    }
+  }
+}
