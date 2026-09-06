@@ -12,7 +12,7 @@
 // Italics are declared but only fetched when something actually renders italic.
 // -----------------------------------------------------------------------------
 
-// Inter Tight — headings (--font-heading)
+// Inter Tight — headings (--octave--font-family--inter-tight)
 
 @font-face {
   font-family: 'Inter Tight';
@@ -32,7 +32,7 @@
     format('woff2');
 }
 
-// Source Serif 4 — body copy (--font-body). Axis starts at 200, not 100.
+// Source Serif 4 — body copy (--octave--font-family--source-serif-4). Axis starts at 200, not 100.
 
 @font-face {
   font-family: 'Source Serif 4';
@@ -52,7 +52,7 @@
     format('woff2');
 }
 
-// JetBrains Mono — code (--font-mono). Axis tops out at 800, not 900.
+// JetBrains Mono — code (--octave--font-family--jetbrains-mono). Axis tops out at 800, not 900.
 
 @font-face {
   font-family: 'JetBrains Mono';

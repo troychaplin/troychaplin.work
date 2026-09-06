@@ -6,10 +6,10 @@
 // resolved at compile time.
 // -----------------------------------------------------------------------------
 
-$bp-sm: 30rem; // 480px
-$bp-md: 48rem; // 768px
-$bp-lg: 64rem; // 1024px
-$bp-xl: 80rem; // 1280px
+$bp-sm: 672px;
+$bp-md: 896px;
+$bp-lg: 1024px;
+$bp-xl: 1280px;
 
 // Mobile-first. Write the small-screen rules first, then layer with up().
 @mixin up($bp) {
@@ -40,6 +40,6 @@ $bp-xl: 80rem; // 1280px
 
 // Consistent keyboard focus treatment.
 @mixin focus-ring($offset: 2px) {
-  outline: 2px solid var(--color-accent);
+  outline: 2px solid var(--color-accent); // TODO: dark mode toggle
   outline-offset: $offset;
 }

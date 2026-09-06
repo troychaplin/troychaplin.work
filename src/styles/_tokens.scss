@@ -1,155 +1,193 @@
-// -----------------------------------------------------------------------------
-// Design tokens
-//
-// Two tiers:
-//   1. Primitives  — raw values. Identical in every theme. Rarely referenced
-//                    directly from components.
-//   2. Semantic    — what a value is *for*. These are the ones components use,
-//                    and the only ones that change between light and dark.
-// -----------------------------------------------------------------------------
+:root {
+    // Layout
+    --octave--layout-small: 672px;
+    --octave--layout-medium: 896px;
+    --octave--layout-large: 1024px;
+    --octave--layout-x-large: 1280px;
+    --octave--layout-full: 100vw;
+
+    // Base colors
+    --octave--color--white: #fff;
+    --octave--color--black: #000;
+
+    // Accents colors
+    --octave--color--primary: #a34f3e;
+    --octave--color--secondary: #ca2135;
+
+    // Brown colors
+    --octave--color--neutral-50: #f9f7f3;
+	--octave--color--neutral-100: #f2f0ea;
+	--octave--color--neutral-200: #efeae2;
+	--octave--color--neutral-300: #e0d6c8;
+	--octave--color--neutral-400: #d8d5cf;
+	--octave--color--neutral-500: #8d7661;
+	--octave--color--neutral-600: #766051;
+	--octave--color--neutral-700: #5e4c42;
+	--octave--color--neutral-800: #51413a;
+	--octave--color--neutral-900: #473a35;
+    --octave--color--neutral-950: #271f1c;
+
+    // Font families
+    --octave--font-family--inter-tight: "Inter Tight", system-ui, 'Segoe UI', roboto, sans-serif;
+    --octave--font-family--source-serif-4: "Source Serif 4", ui-serif, georgia, serif;
+    --octave--font-family--jetbrains-mono: "JetBrains Mono", ui-monospace, consolas, monospace;
+    
+    // Font weights
+    --octave--weight-light: 300;
+    --octave--weight-normal: 400;
+    --octave--weight-medium: 500;
+    --octave--weight-semibold: 600;
+    --octave--weight-bold: 700;
+
+    // Font sizes
+	--octave--font-size--2-x-small: clamp(0.6875rem, 0.688rem + ((1vw - 0.2rem) * 0.119), 0.75rem);
+	--octave--font-size--x-small: clamp(0.8125rem, 0.813rem + ((1vw - 0.2rem) * 0.119), 0.875rem);
+    --octave--font-size--small: clamp(0.875rem, 0.875rem + ((1vw - 0.2rem) * 0.24), 1rem);
+	--octave--font-size--medium: clamp(1rem, 1rem + ((1vw - 0.2rem) * 0.481), 1.25rem);
+	--octave--font-size--large: clamp(1rem, 1rem + ((1vw - 0.2rem) * 0.962), 1.5rem);
+	--octave--font-size--x-large: clamp(1.4375rem, 1.438rem + ((1vw - 0.2rem) * 1.081), 2rem);
+	--octave--font-size--2-x-large: clamp(1.75rem, 1.75rem + ((1vw - 0.2rem) * 1.804), 2.6875rem);
+	--octave--font-size--3-x-large: clamp(2.0625rem, 2.063rem + ((1vw - 0.2rem) * 2.885), 3.5625rem);
+	--octave--font-size--4-x-large: clamp(2.5rem, 2.5rem + ((1vw - 0.2rem) * 4.327), 4.75rem);
+	--octave--font-size--5-x-large: clamp(2.375rem, 2.375rem + ((1vw - 0.2rem) * 6.419), 5.7125rem);
+	--octave--font-size--hero: clamp(3.5625rem, 3.563rem + ((1vw - 0.2rem) * 9.375), 8.4375rem);
+
+    // Font sizes: headings
+    --octave--font-size--heading-small: clamp(1rem, 1rem + ((1vw - 0.2rem) * 0.833), 1.5rem);
+    --octave--font-size--heading-medium: clamp(1.25rem, 1.25rem + ((1vw - 0.2rem) * 0.833), 1.75rem);
+    --octave--font-size--heading-large: clamp(1.5rem, 1.5rem + ((1vw - 0.2rem) * 1.25), 2.25rem);
+    --octave--font-size--heading-x-large: clamp(1.75rem, 1.75rem + ((1vw - 0.2rem) * 1.25), 2.5rem);
+    --octave--font-size--heading-primary: clamp(1.75rem, 1.75rem + ((1vw - 0.2rem) * 2.083), 3rem);
+
+    // Font line height
+    --octave--line-height-tight: 1.3;
+    --octave--line-height-normal: 1.6;
+    --octave--line-height-loose: 1.8;
+
+    // Spacing
+	--octave--spacing--10: 0.175rem;
+    --octave--spacing--20: 0.25rem;
+	--octave--spacing--30: 0.5rem;
+	--octave--spacing--40: clamp(0.625rem, 0.625rem + ((1vw - 0.2rem) * 0.240), 0.75rem);
+	--octave--spacing--50: clamp(0.8125rem, 0.8125rem + ((1vw - 0.2rem) * 0.361), 1rem);
+	--octave--spacing--60: clamp(0.9375rem, 0.9375rem + ((1vw - 0.2rem) * 0.601), 1.25rem);
+	--octave--spacing--70: clamp(1.0625rem, 1.0625rem + ((1vw - 0.2rem) * 0.841), 1.5rem);
+	--octave--spacing--80: clamp(1.1875rem, 1.1875rem + ((1vw - 0.2rem) * 1.563), 2rem);
+	--octave--spacing--90: clamp(1.3125rem, 1.3125rem + ((1vw - 0.2rem) * 2.284), 2.5rem);
+	--octave--spacing--100: clamp(1.4375rem, 1.4375rem + ((1vw - 0.2rem) * 3.005), 3rem);
+	--octave--spacing--110: clamp(1.625rem, 1.625rem + ((1vw - 0.2rem) * 4.567), 4rem);
+	--octave--spacing--120: clamp(1.75rem, 1.75rem + ((1vw - 0.2rem) * 6.250), 5rem);
+
+    // Shadows
+	--octave--shadow--natural: 6px 6px 9px rgba(0, 0, 0, 0.2);
+	--octave--shadow--deep: 12px 12px 50px rgba(0, 0, 0, 0.4);
+	--octave--shadow--sharp: 6px 6px 0px rgba(0, 0, 0, 0.2);
+	--octave--shadow--outlined: 6px 6px 0px -3px rgb(255, 255, 255), 6px 6px rgb(0, 0, 0);
+	--octave--shadow--crisp: 6px 6px 0px rgb(0, 0, 0);
+
+    // Radii
+    --octave--radius-sm: 4px;
+    --octave--radius-md: 6px;
+    --octave--radius-lg: 10px;
+    --octave--radius-full: 9999px;
+
+    // Transition timings
+    --octave--transition-fast: 150ms ease;
+    --octave--transition-base: 250ms ease;
+
+    // Stacking
+    --octave--z-header: 100;
+    --octave--z-overlay: 200;
+}
+
+:root {
+    // // Spacing scale
+    // --octave--spacing--20: 0.25rem;
+    // --octave--spacing--30: 0.5rem;
+    // --octave--spacing--40: 0.75rem;
+    // --space-4: var(--octave--spacing--60);
+    // --space-5: 1.5rem;
+    // --octave--spacing--120: 2rem;
+    // --space-7: 2.5rem;
+    // --space-8: 3rem;
+    // --space-9: 4rem;
+    // --octave--spacing--200: 5rem;
+    // --octave--spacing--201: 6rem;
+    // --octave--spacing--202: 8rem;
+
+    // --leading-tight: 1.15;
+    // --leading-snug: 1.3;
+    // --leading-normal: 1.45;
+    // --leading-relaxed: 1.65;
+
+    // --tracking-tight: -0.03em;
+    // --tracking-normal: 0.01em;
+
+    // // Layout
+    // --container-max: 70rem; // 1120px
+    // --header-height: 4rem;
+}
+
+:root {
+    color-scheme: light;
+
+    // Header colors
+    --switcher--header-bg: var(--octave--color--white);
+    --switcher--header-border: var(--octave--color--neutral-400);
+
+    // --color-bg: var(--octave--color--neutral-50);
+    // --color-surface: rgb(244 243 236 / 50%);
+    // --color-text: var(--neutral-500);
+    // --color-text-strong: var(--neutral-900);
+    // --color-text-muted: var(--neutral-400);
+    // --color-border: var(--neutral-100);
+    // --color-code-bg: var(--neutral-50);
+
+    // --color-accent: var(--octave--color--secondary);
+    // --color-accent-bg: color-mix(in srgb, var(--octave--color--secondary) 10%, transparent);
+    // --color-accent-border: color-mix(in srgb, var(--octave--color--secondary) 50%, transparent);
+    // --color-accent-contrast: var(--octave--color--neutral-50);
+
+    // --shadow-sm: rgb(0 0 0 / 8%) 0 1px 3px 0;
+    // --shadow-md:
+    //     rgb(0 0 0 / 10%) 0 10px 15px -3px, rgb(0 0 0 / 5%) 0 4px 6px -2px;
+}
 
 // Dark palette lives in a mixin because it has to be emitted twice: once for
 // the OS preference, once for an explicit user override. Written here, once.
 @mixin dark-tokens {
-  color-scheme: dark;
+    color-scheme: dark;
 
-  --color-bg: var(--slate-900);
-  --color-surface: rgb(47 48 58 / 50%);
-  --color-text: var(--slate-400);
-  --color-text-strong: var(--slate-100);
-  --color-text-muted: var(--slate-500);
-  --color-border: var(--slate-800);
-  --color-code-bg: var(--slate-850);
+    // Header colors
+    --switcher--header-bg: var(--octave--color--neutral-950);
+    --switcher--header-border: var(--octave--color--neutral-700);
 
-  --color-accent: var(--purple-400);
-  --color-accent-bg: color-mix(in srgb, var(--purple-400) 15%, transparent);
-  --color-accent-border: color-mix(in srgb, var(--purple-400) 50%, transparent);
-  --color-accent-contrast: var(--slate-900);
+    // --color-bg: var(--octave--color--neutral-950);
+    // --color-surface: rgb(47 48 58 / 50%);
+    // --color-text: var(--neutral-400);
+    // --color-text-strong: var(--neutral-100);
+    // --color-text-muted: var(--neutral-500);
+    // --color-border: var(--neutral-800);
+    // --color-code-bg: var(--neutral-850);
 
-  --shadow-sm: rgb(0 0 0 / 30%) 0 1px 3px 0;
-  --shadow-md:
-    rgb(0 0 0 / 40%) 0 10px 15px -3px, rgb(0 0 0 / 25%) 0 4px 6px -2px;
-}
+    // --color-accent: var(--octave--color--primary);
+    // --color-accent-bg: color-mix(in srgb, var(--octave--color--primary) 15%, transparent);
+    // --color-accent-border: color-mix(in srgb, var(--octave--color--primary) 50%, transparent);
+    // --color-accent-contrast: var(--neutral-900);
 
-:root {
-  // ---------------------------------------------------------------------------
-  // 1. Primitives
-  // ---------------------------------------------------------------------------
-
-  // Accent ramp
-  --purple-400: #c084fc;
-  --purple-500: #aa3bff;
-
-  // Light neutrals (warm, slightly violet)
-  --neutral-0: #ffffff;
-  --neutral-50: #f4f3ec;
-  --neutral-100: #e5e4e7;
-  --neutral-400: #8b8494;
-  --neutral-500: #6b6375;
-  --neutral-900: #08060d;
-
-  // Dark neutrals (cool)
-  --slate-100: #f3f4f6;
-  --slate-400: #9ca3af;
-  --slate-500: #6b7280;
-  --slate-800: #2e303a;
-  --slate-850: #1f2028;
-  --slate-900: #16171d;
-
-  // Spacing scale
-  --space-1: 0.25rem;
-  --space-2: 0.5rem;
-  --space-3: 0.75rem;
-  --space-4: 1rem;
-  --space-5: 1.5rem;
-  --space-6: 2rem;
-  --space-7: 2.5rem;
-  --space-8: 3rem;
-  --space-9: 4rem;
-  --space-10: 5rem;
-  --space-11: 6rem;
-  --space-12: 8rem;
-
-  // Type families. Faces are declared in _fonts.scss; each fallback matches its
-  // face's classification so text stays readable during the swap.
-  --font-heading: 'Inter Tight', system-ui, 'Segoe UI', roboto, sans-serif;
-  --font-body: 'Source Serif 4', ui-serif, georgia, serif;
-  --font-mono: 'JetBrains Mono', ui-monospace, consolas, monospace;
-
-  // Type scale
-  --text-xs: 0.75rem; // 12px
-  --text-sm: 0.9375rem; // 15px — inline code
-  --text-md: 1rem; // 16px — buttons, nav
-  --text-base: 1.125rem; // 18px — body
-  --text-lg: 1.25rem; // 20px
-  --text-xl: 1.5rem; // 24px — h2
-  --text-2xl: 2rem; // 32px
-  --text-3xl: 2.25rem; // 36px
-  --text-4xl: 3.5rem; // 56px — h1
-
-  --leading-tight: 1.15;
-  --leading-snug: 1.3;
-  --leading-normal: 1.45;
-  --leading-relaxed: 1.65;
-
-  --tracking-tight: -0.03em;
-  --tracking-normal: 0.01em;
-
-  --weight-normal: 400;
-  --weight-medium: 500;
-  --weight-semibold: 600;
-  --weight-bold: 700;
-
-  // Radii
-  --radius-sm: 4px;
-  --radius-md: 6px;
-  --radius-lg: 10px;
-  --radius-full: 9999px;
-
-  // Motion
-  --transition-fast: 150ms ease;
-  --transition-base: 250ms ease;
-
-  // Layout
-  --container-max: 70rem; // 1120px
-  --header-height: 4rem;
-
-  // Stacking
-  --z-header: 100;
-  --z-overlay: 200;
-
-  // ---------------------------------------------------------------------------
-  // 2. Semantic — light is the base; dark-tokens overrides only this block
-  // ---------------------------------------------------------------------------
-
-  color-scheme: light;
-
-  --color-bg: var(--neutral-0);
-  --color-surface: rgb(244 243 236 / 50%);
-  --color-text: var(--neutral-500);
-  --color-text-strong: var(--neutral-900);
-  --color-text-muted: var(--neutral-400);
-  --color-border: var(--neutral-100);
-  --color-code-bg: var(--neutral-50);
-
-  --color-accent: var(--purple-500);
-  --color-accent-bg: color-mix(in srgb, var(--purple-500) 10%, transparent);
-  --color-accent-border: color-mix(in srgb, var(--purple-500) 50%, transparent);
-  --color-accent-contrast: var(--neutral-0);
-
-  --shadow-sm: rgb(0 0 0 / 8%) 0 1px 3px 0;
-  --shadow-md:
-    rgb(0 0 0 / 10%) 0 10px 15px -3px, rgb(0 0 0 / 5%) 0 4px 6px -2px;
+    // --shadow-sm: rgb(0 0 0 / 30%) 0 1px 3px 0;
+    // --shadow-md:
+    //     rgb(0 0 0 / 40%) 0 10px 15px -3px, rgb(0 0 0 / 25%) 0 4px 6px -2px;
 }
 
 // Follow the OS — but only while the user has not forced light.
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme='light']) {
-    @include dark-tokens;
-  }
+    :root:not([data-theme='light']) {
+        @include dark-tokens;
+    }
 }
 
-// Explicit user override, set by ThemeProvider (and the no-flash script).
+    // Explicit user override, set by ThemeProvider (and the no-flash script).
 :root[data-theme='dark'] {
-  @include dark-tokens;
+    @include dark-tokens;
 }

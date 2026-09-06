@@ -1,0 +1,73 @@
+:root {
+  --octave--root-padding-top: 0;
+  --octave--root-padding-right: var(--octave--spacing--80);
+  --octave--root-padding-bottom: 0;
+  --octave--root-padding-left: var(--octave--spacing--80);
+  --octave--root-block-gap: 0;
+}
+
+:where(.is-layout-constrained) > * {
+    margin-block-start: 0;
+    margin-block-end: 0;
+}
+
+:where(.is-layout-constrained) > * + * {
+    margin-block-start: var(--octave--root-block-gap);
+}
+
+:where(.is-layout-flex) {
+    gap: var(--octave--root-block-gap);
+}
+
+:where(.is-layout-grid) {
+    gap: var(--octave--root-block-gap);
+}
+
+:where(.entry-content) > * + * {
+    margin-block-start: var(--octave--spacing-medium);
+}
+
+.is-layout-constrained > :where(:not(.alignleft):not(.alignright):not(.alignfull)) {
+    max-width: var(--octave--layout-content-size);
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+.is-layout-constrained > .alignwide {
+    max-width: var(--octave--layout-wide-size);
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+.has-global-padding {
+    padding-right: var(--octave--root-padding-right);
+    padding-left: var(--octave--root-padding-left);
+}
+
+.has-global-padding > .alignfull {
+    max-width: none;
+    margin-right: calc(var(--octave--root-padding-right) * -1);
+    margin-left: calc(var(--octave--root-padding-left) * -1);
+}
+
+.has-global-padding > .alignfull > .has-global-padding {
+    padding-right: var(--octave--root-padding-right);
+    padding-left: var(--octave--root-padding-left);
+}
+
+// Global width classes for Gutenberg alignments, to be used in Section component
+.alignsmall {
+    max-width: var(--octave--layout-small);
+}
+
+.aligncontent {
+    max-width: var(--octave--layout-medium);
+}
+
+.alignwide {
+    max-width: var(--octave--layout-large);
+}
+
+.alignfull {
+    max-width: var(--octave--layout-full);
+}

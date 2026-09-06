@@ -1,18 +1,18 @@
 .footer {
-  border-top: 1px solid var(--color-border);
-  transition: border-color var(--transition-base);
+  border-top: 1px solid var(--wp--preset--color--neutral-400); // TODO: dark mode toggle
+  transition: border-color var(--octave--transition-base);
 
   &__inner {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--space-3);
+    gap: var(--octave--spacing--40);
     align-items: center;
     justify-content: space-between;
-    padding-block: var(--space-6);
+    padding-block: var(--octave--spacing--120);
   }
 
   &__note {
-    font-size: var(--text-md);
-    color: var(--color-text-muted);
+    font-size: var(--octave--font-size--medium);
+    color: var(--octave--color--neutral-400); // TODO: dark mode toggle
   }
 }

@@ -12,8 +12,7 @@ const NAV_ITEMS = [
 
 export function Header() {
   return (
-    <header className="header">
-      <Container>
+      <Container as="header" className="header" maxWidth="full" contentWidth="md">
         <div className="header__inner">
           <NavLink to="/" className="header__brand">
             Troy Chaplin
@@ -35,6 +34,5 @@ export function Header() {
           <ThemeToggle />
         </div>
       </Container>
-    </header>
   )
 }
