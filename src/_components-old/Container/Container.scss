@@ -1,0 +1,33 @@
+.container {
+    width: 100%;
+    max-width: var(--octave--layout-medium);
+    padding-inline: var(--octave--spacing--60);
+
+    @include minBreakpoint($break-md) {
+        padding-inline: var(--octave--spacing--80);
+    }
+}
+
+.container--md,
+.container__inner-md {
+    max-width: var(--octave--layout-medium);
+    margin-inline: auto;
+}
+
+.container--lg,
+.container__inner-lg {
+    max-width: var(--octave--layout-large);
+    margin-inline: auto;
+}
+
+.container--xl,
+.container__inner-xl {
+    max-width: var(--octave--layout-x-large);
+    margin-inline: auto;
+}
+
+.container--full,
+.container__inner-full {
+    max-width: var(--octave--layout-full);
+    margin-inline: auto;
+}

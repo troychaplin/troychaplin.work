@@ -1,23 +1,27 @@
-import type { ReactNode } from 'react'
-import { Container } from '../Container/Container'
-import { Footer } from '../Footer/Footer'
-import { Header } from '../Header/Header'
+// import { Footer } from '../Footer/Footer'
+// import { Header } from '../Header/Header'
 import './Layout.scss'
 
-export function Layout({ children }: { children: ReactNode }) {
-  return (
-    <div className="layout">
-      <a className="layout__skip-link" href="#main">
-        Skip to content
-      </a>
+export interface LayoutProps {
+    children: React.ReactNode;
+    hasPadding?: boolean;
+    className?: string;
+}
 
-      <Header />
+export function Layout({ children, hasPadding = true, className = '' }: LayoutProps) {
+    return (
+        <>
+            <a className="octave-layout__skip-link" href="#main">Skip to content</a>
 
-      <main className="layout__main" id="main">
-        <Container>{children}</Container>
-      </main>
+            {/* <Header /> */}
+            
+            <main className={`${hasPadding ? 'octave-main octave-main--padding' : 'octave-main'} ${className}`} >
+                <div className="alignfull has-global-padding is-layout-constrained entry-content">
+                    {children}
+                </div>
+            </main>
 
-      <Footer />
-    </div>
-  )
+            {/* <Footer /> */}
+        </>
+    )
 }
