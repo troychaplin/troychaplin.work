@@ -26,17 +26,13 @@ Then build and publish:
 
 ```bash
 npm run build
-sf publish ./dist --name spacefast-app
+sf publish ./dist --name troychaplin-work --spa true
 ```
 
-(`npm run publish` does both in one step — see package.json.)
+(`npm run deploy` does both in one step — see package.json.)
 
-This is a single-page app, so if Spacefast doesn't detect the SPA fallback
-automatically, force it:
-
-```bash
-sf publish ./dist --name spacefast-app --spa true
-```
+This is a single-page app with client-side routing, so `--spa true` is
+required — without it a hard refresh on a route like `/about` returns 404.
 
 ## Claim your space
 

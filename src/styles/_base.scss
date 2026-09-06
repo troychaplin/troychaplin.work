@@ -1,0 +1,95 @@
+// -----------------------------------------------------------------------------
+// Base element styles
+// -----------------------------------------------------------------------------
+
+// Partials reached via @use do not get the auto-injection from vite.config.ts —
+// that only applies to entries Vite hands to Sass. So import it explicitly here.
+@use 'abstracts' as *;
+
+body {
+  font-family: var(--font-sans);
+  font-size: var(--text-md);
+  letter-spacing: var(--tracking-normal);
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  transition:
+    color var(--transition-base),
+    background-color var(--transition-base);
+
+  @include up($bp-lg) {
+    font-size: var(--text-base);
+  }
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-heading);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-tight);
+  color: var(--color-text-strong);
+  text-wrap: balance;
+}
+
+h1 {
+  font-size: var(--text-3xl);
+  letter-spacing: var(--tracking-tight);
+
+  @include up($bp-lg) {
+    font-size: var(--text-4xl);
+  }
+}
+
+h2 {
+  font-size: var(--text-lg);
+  letter-spacing: var(--tracking-tight);
+
+  @include up($bp-lg) {
+    font-size: var(--text-xl);
+  }
+}
+
+h3 {
+  font-size: var(--text-md);
+
+  @include up($bp-lg) {
+    font-size: var(--text-lg);
+  }
+}
+
+p {
+  text-wrap: pretty;
+}
+
+a {
+  color: var(--color-accent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+  transition: color var(--transition-fast);
+}
+
+code,
+kbd,
+samp,
+pre {
+  font-family: var(--font-mono);
+}
+
+code {
+  display: inline-flex;
+  padding: var(--space-1) var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--color-text-strong);
+  background-color: var(--color-code-bg);
+  border-radius: var(--radius-sm);
+}
+
+:focus-visible {
+  @include focus-ring;
+}
+
+::selection {
+  color: var(--color-text-strong);
+  background-color: var(--color-accent-bg);
+}
