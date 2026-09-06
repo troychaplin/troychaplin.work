@@ -1,0 +1,11 @@
+// -----------------------------------------------------------------------------
+// Compile-time only. Auto-injected into every .scss entry by vite.config.ts, so
+// mixins and breakpoint variables are available everywhere without boilerplate.
+//
+// MUST NOT emit any CSS, and must never forward _tokens.scss — anything that
+// produces output here would be duplicated into every stylesheet in the app.
+// Component files should NOT write `@use 'abstracts'` themselves; it is already
+// in scope, and a second `as *` would be a namespace collision.
+// -----------------------------------------------------------------------------
+
+@forward 'mixins';

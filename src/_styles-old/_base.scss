@@ -1,0 +1,60 @@
+// -----------------------------------------------------------------------------
+// Base element styles
+// -----------------------------------------------------------------------------
+
+// Partials reached via @use do not get the auto-injection from vite.config.ts —
+// that only applies to entries Vite hands to Sass. So import it explicitly here.
+@use 'abstracts' as *;
+
+html {
+    font-size: 100%;
+    -webkit-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
+
+    @media (prefers-reduced-motion: reduce) {
+        scroll-behavior: auto;
+    }
+}
+
+body {
+    font-family: var(--octave--font-family--source-serif-4);
+    font-size: var(--octave--font-size--medium);
+    font-weight: var(--octave--weight-light);
+    color: var(--color-text); // TODO: dark mode toggle
+    line-height: var(--octave--line-height-normal);
+    background-color: var(--color-bg); // TODO: dark mode toggle
+    transition:
+        color var(--octave--transition-base),
+        background-color var(--octave--transition-base);
+
+    @include up($bp-lg) {
+        font-size: var(--octave--font-size--large);
+    }
+}
+
+:focus-visible {
+    @include focus-ring;
+}
+
+::selection {
+    color: var(--color-text-strong); // TODO: dark mode toggle
+    background-color: var(--color-accent-bg); // TODO: dark mode toggle
+}
+
+// code,
+// kbd,
+// samp,
+// pre {
+//     font-family: var(--octave--font-family--jetbrains-mono);
+// }
+
+// code {
+//     display: inline-flex;
+//     padding: var(--octave--spacing--20) var(--octave--spacing--30);
+//     font-size: var(--octave--font-size--small);
+//     color: var(--color-text-strong);
+//     background-color: var(--color-code-bg);
+//     border-radius: var(--radius-sm);
+// }

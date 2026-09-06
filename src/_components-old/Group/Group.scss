@@ -1,0 +1,34 @@
+.octave-group {
+    width: 100%;
+    max-width: var(--octave--layout-medium);
+    padding-inline: var(--octave--spacing--60);
+    background: blue;
+
+    @include up($bp-md) {
+        padding-inline: var(--octave--spacing--80);
+    }
+}
+
+.octave-group--md,
+.octave-group__inner-md {
+    max-width: var(--octave--layout-medium);
+    margin-inline: auto;
+}
+
+.octave-group--lg,
+.octave-group__inner-lg {
+    max-width: var(--octave--layout-large);
+    margin-inline: auto;
+}
+
+.octave-group--xl,
+.octave-group__inner-xl {
+    max-width: var(--octave--layout-x-large);
+    margin-inline: auto;
+}
+
+.octave-group--full,
+.octave-group__inner-full {
+    max-width: var(--octave--layout-full);
+    margin-inline: auto;
+}
