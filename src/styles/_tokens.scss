@@ -70,10 +70,11 @@
   --space-11: 6rem;
   --space-12: 8rem;
 
-  // Type families. --font-heading is a deliberate seam for a display webfont.
-  --font-sans: system-ui, 'Segoe UI', roboto, sans-serif;
-  --font-heading: system-ui, 'Segoe UI', roboto, sans-serif;
-  --font-mono: ui-monospace, consolas, monospace;
+  // Type families. Faces are declared in _fonts.scss; each fallback matches its
+  // face's classification so text stays readable during the swap.
+  --font-heading: 'Inter Tight', system-ui, 'Segoe UI', roboto, sans-serif;
+  --font-body: 'Source Serif 4', ui-serif, georgia, serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, consolas, monospace;
 
   // Type scale
   --text-xs: 0.75rem; // 12px
@@ -97,6 +98,7 @@
   --weight-normal: 400;
   --weight-medium: 500;
   --weight-semibold: 600;
+  --weight-bold: 700;
 
   // Radii
   --radius-sm: 4px;

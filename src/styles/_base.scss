@@ -7,7 +7,7 @@
 @use 'abstracts' as *;
 
 body {
-  font-family: var(--font-sans);
+  font-family: var(--font-body);
   font-size: var(--text-md);
   letter-spacing: var(--tracking-normal);
   color: var(--color-text);

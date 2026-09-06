@@ -19,6 +19,7 @@ SCSS, compiled by `sass-embedded`. Two layers:
 | File | Purpose |
 | --- | --- |
 | `main.scss` | Entry. `@use`s the partials below, in cascade order. |
+| `_fonts.scss` | `@font-face` for the three self-hosted variable families. |
 | `_tokens.scss` | All design tokens as custom properties on `:root`, plus the dark palette. |
 | `_reset.scss` | Reset, including `prefers-reduced-motion`. |
 | `_base.scss` | Bare element styles — headings, links, code, focus. |
@@ -61,6 +62,15 @@ in every theme. **Semantic** tokens (`--color-bg`, `--color-text`,
 `--color-accent`, …) say what a value is *for*, and are the only ones that change
 between light and dark. Components should use semantic tokens almost exclusively
 and should not contain raw colour values.
+
+### Type
+
+Three self-hosted variable families, one file per style:
+`--font-heading` is Inter Tight, `--font-body` is Source Serif 4, `--font-mono`
+is JetBrains Mono. Each `@font-face` declares that family's real weight *range*
+(`100 900`, `200 900` and `100 800` respectively — they differ, so don't
+copy one onto another), which is what lets a single file cover every weight.
+Italic faces are declared but fetched only when something renders italic.
 
 ## Theming
 
