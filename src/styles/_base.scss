@@ -24,7 +24,7 @@ body {
     font-weight: var(--octave--weight-light);
     color: var(--color-text); // TODO: dark mode toggle
     line-height: var(--octave--line-height-normal);
-    background-color: var(--color-bg); // TODO: dark mode toggle
+    background-color: var(--octave--color--neutral-50); // TODO: dark mode toggle
     transition:
         color var(--octave--transition-base),
         background-color var(--octave--transition-base);

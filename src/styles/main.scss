@@ -7,6 +7,5 @@
 @use 'tokens';
 @use 'reset';
 @use 'base';
-
-@use './_new/layout';
-@use './_new/typography';
+@use 'layout';
+@use 'typography';

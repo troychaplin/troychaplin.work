@@ -1,3 +1,8 @@
+.octave-group + :not(.octave-group),
+:not(.octave-group) + .octave-group {
+    margin-block-start: var(--octave--spacing--80);
+}
+
 .octave-group.aligncontent {
     max-width: calc(var(--octave--layout-medium) + (var(--octave--spacing--90) * 2)) !important;
 
@@ -23,7 +28,7 @@
     //     margin-top: 0;
     // }
 
-    & + .octave-group--light.alignwide {
+    & + .octave-group--light.alignfull {
         margin-block-start: 0;
     }
 }
@@ -36,7 +41,7 @@
     //     margin-top: 0;
     // }
 
-    & + .octave-group--dark.alignwide {
+    & + .octave-group--dark.alignfull {
         margin-block-start: 0;
     }
 }
