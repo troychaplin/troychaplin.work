@@ -39,9 +39,9 @@ jobs:
       - name: Publish to Spacefast
         env:
           SPACEFAST_TOKEN: ${{ secrets.SPACEFAST_TOKEN }}
-          SPACEFAST_SPACE: ${{ vars.SPACEFAST_SPACE }}
+        # --space is pinned here on purpose: without it the CLI creates a new space.
         run: |
-          sf publish ./dist --prebuilt --spa true \
+          sf publish ./dist --space curious-wind --prebuilt --spa true \
             --message "Release ${GITHUB_REF_NAME}" \
             --json > receipt.json
           {

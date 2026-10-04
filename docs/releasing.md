@@ -79,7 +79,7 @@ workflow only publishes when it runs on a `v*` tag.
 | Symptom | Cause / fix |
 | --- | --- |
 | Job succeeds, but the summary or diagnostics mention `noop_publish` | The build is byte-identical to what's live, so no new version was created. This counts as success. |
-| `validation_error` about the space | The `SPACEFAST_SPACE` repository variable is missing or blank. |
+| A new space (e.g. `dist`) appears instead of updating the site | The publish step lost its `--space curious-wind` flag. Restore it, then delete the stray space. |
 | `401` / `unauthorized` | `SPACEFAST_TOKEN` is missing, revoked, or wrong. See *Rotate the API key* below. |
 | `429` | Publish rate limit for the plan. Wait for the `Retry-After` period and re-run. |
 | Deep link like `/about` returns 404 | The publish lost `--spa true`. Check the workflow step. |

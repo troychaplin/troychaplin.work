@@ -16,7 +16,7 @@ GitHub Actions — .github/workflows/release.yml
   pnpm install --frozen-lockfile → pnpm lint → pnpm build → npm i -g spacefast
         │
         ▼
-sf publish ./dist --prebuilt --spa true   (auth: SPACEFAST_TOKEN, target: SPACEFAST_SPACE)
+sf publish ./dist --space curious-wind --prebuilt --spa true   (auth: SPACEFAST_TOKEN)
         │
         ▼
 Spacefast space "troychaplin.work" (slug curious-wind)
@@ -73,10 +73,13 @@ single-page-app fallback. It's passed explicitly in both the workflow and the
 | Where | Name | Value |
 | --- | --- | --- |
 | GitHub → Settings → Secrets and variables → Actions → **Secrets** | `SPACEFAST_TOKEN` | A Spacefast API key (`sfa_…`) with the `ci_deploy` preset |
-| GitHub → Settings → Secrets and variables → Actions → **Variables** | `SPACEFAST_SPACE` | `curious-wind` (the space slug or its `spc_…` id) |
+| `.github/workflows/release.yml` | `--space curious-wind` | The target space, hard-coded in the publish step |
 
-The workflow fails with `validation_error` if `SPACEFAST_SPACE` is blank. That's
-deliberate: a missing value can't quietly create a second space.
+The space is written into the workflow rather than read from a variable because
+a missing value doesn't fail: `sf publish` with no space creates a **new** space
+named after the folder (`dist`). That happened on `v0.0.3`, when the value was
+saved as a secret but read as a variable. If the space ever changes, edit the
+workflow, the `deploy` script in `package.json`, and these docs.
 
 Nothing Spacefast-specific is committed apart from the workflow. `.spacefast/`
 (local CLI state) is gitignored.
@@ -122,12 +125,10 @@ sf api-keys create --name "GitHub Actions publish" --preset ci_deploy
 domains, members, or billing. The `sfa_…` secret prints **once**. Paste it
 straight into the GitHub secret below and don't save it anywhere else.
 
-### 4. Add the GitHub secret and variable
+### 4. Add the GitHub secret
 
-In the repository, go to **Settings → Secrets and variables → Actions**:
-
-- **Secrets** tab → New repository secret → `SPACEFAST_TOKEN` = the `sfa_…` key
-- **Variables** tab → New repository variable → `SPACEFAST_SPACE` = `curious-wind`
+In the repository, go to **Settings → Secrets and variables → Actions → Secrets**
+→ New repository secret → `SPACEFAST_TOKEN` = the `sfa_…` key.
 
 ### 5. Connect the domain
 
