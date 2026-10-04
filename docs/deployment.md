@@ -19,7 +19,7 @@ GitHub Actions — .github/workflows/release.yml
 sf publish ./dist --prebuilt --spa true   (auth: SPACEFAST_TOKEN, target: SPACEFAST_SPACE)
         │
         ▼
-Spacefast space "troychaplin-work"
+Spacefast space "troychaplin.work" (slug curious-wind)
   new immutable version (v1, v2, …) → promoted to the live channel
         │
         ▼
@@ -52,8 +52,14 @@ trigger. Publishing from Actions on `push: tags` is the documented
 [Publish from CI](https://spacefast.com/docs/ci) lane, and it gives us
 release-only deploys.
 
-Don't connect the repository in the Spacefast dashboard as well. Branch pushes
-would then deploy alongside tags.
+The `curious-wind` space does have this repository connected (production branch
+`main`), but with **Auto production** and **Auto previews** both turned off, so
+pushes deploy nothing. Keep them off, or branch pushes would deploy alongside
+tags. Check with:
+
+```bash
+sf git ls --space curious-wind
+```
 
 ### SPA fallback
 
@@ -67,7 +73,7 @@ single-page-app fallback. It's passed explicitly in both the workflow and the
 | Where | Name | Value |
 | --- | --- | --- |
 | GitHub → Settings → Secrets and variables → Actions → **Secrets** | `SPACEFAST_TOKEN` | A Spacefast API key (`sfa_…`) with the `ci_deploy` preset |
-| GitHub → Settings → Secrets and variables → Actions → **Variables** | `SPACEFAST_SPACE` | `troychaplin-work` (the space slug or its `spc_…` id) |
+| GitHub → Settings → Secrets and variables → Actions → **Variables** | `SPACEFAST_SPACE` | `curious-wind` (the space slug or its `spc_…` id) |
 
 The workflow fails with `validation_error` if `SPACEFAST_SPACE` is blank. That's
 deliberate: a missing value can't quietly create a second space.
@@ -89,20 +95,22 @@ npm install -g spacefast
 sf login
 ```
 
-### 2. Create the space
+### 2. The space
 
-Publishing for the first time creates the space:
+The space already exists. Its title is **troychaplin.work**, its slug is
+`curious-wind` (auto-generated), and its id is
+`spc_c2b3f863773a4f769aa9d418ee269055`. To create one from scratch instead:
 
 ```bash
 npm run build
 ```
 
 ```bash
-sf publish ./dist --prebuilt --spa true --name "troychaplin.work" --slug troychaplin-work --access public
+sf publish ./dist --prebuilt --spa true --name "troychaplin.work" --access public
 ```
 
 Spaces are private by default, and `--access public` makes this one public.
-Note the `spc_…` id in the receipt.
+Use the slug from the receipt everywhere this doc says `curious-wind`.
 
 ### 3. Create the CI API key
 
@@ -119,12 +127,12 @@ straight into the GitHub secret below and don't save it anywhere else.
 In the repository, go to **Settings → Secrets and variables → Actions**:
 
 - **Secrets** tab → New repository secret → `SPACEFAST_TOKEN` = the `sfa_…` key
-- **Variables** tab → New repository variable → `SPACEFAST_SPACE` = `troychaplin-work`
+- **Variables** tab → New repository variable → `SPACEFAST_SPACE` = `curious-wind`
 
 ### 5. Connect the domain
 
 ```bash
-sf domains add troychaplin.work --space troychaplin-work --role primary
+sf domains add troychaplin.work --space curious-wind --role primary
 ```
 
 The command prints the DNS records to create at your DNS host: a `TXT`
@@ -139,7 +147,7 @@ Spacefast checks DNS on its own every 30 seconds or so for the first ten
 minutes. To check sooner:
 
 ```bash
-sf domains check troychaplin.work --space troychaplin-work
+sf domains check troychaplin.work --space curious-wind
 ```
 
 Once the domain is `verified` and SSL is `active`, `troychaplin.work` becomes
@@ -149,7 +157,7 @@ don't have to set that redirect up.
 If something is stuck:
 
 ```bash
-sf domains diagnostics troychaplin.work --space troychaplin-work
+sf domains diagnostics troychaplin.work --space curious-wind
 ```
 
 ### 6. Ship the first release

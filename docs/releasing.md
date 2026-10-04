@@ -46,7 +46,7 @@ A GitHub Release with generated notes is created for the tag.
 Run history from the CLI:
 
 ```bash
-sf versions ls --space troychaplin-work
+sf versions ls --space curious-wind
 ```
 
 ## Roll back
@@ -55,11 +55,11 @@ Each publish is an immutable version, so rolling back restores an earlier build
 without rebuilding it.
 
 ```bash
-sf versions ls --space troychaplin-work
+sf versions ls --space curious-wind
 ```
 
 ```bash
-sf rollback v11 --space troychaplin-work
+sf rollback v11 --space curious-wind
 ```
 
 The dashboard does the same thing from the space's version history.
@@ -83,7 +83,7 @@ workflow only publishes when it runs on a `v*` tag.
 | `401` / `unauthorized` | `SPACEFAST_TOKEN` is missing, revoked, or wrong. See *Rotate the API key* below. |
 | `429` | Publish rate limit for the plan. Wait for the `Retry-After` period and re-run. |
 | Deep link like `/about` returns 404 | The publish lost `--spa true`. Check the workflow step. |
-| Domain not serving | `sf domains diagnostics troychaplin.work --space troychaplin-work`. Usually a leftover `A` record or DNS hasn't propagated. |
+| Domain not serving | `sf domains diagnostics troychaplin.work --space curious-wind`. Usually a leftover `A` record or DNS hasn't propagated. |
 
 Failures from the CLI include a `code`, a `type` URL with recovery steps, and a
 `requestId`. Quote the `requestId` when contacting Spacefast support.

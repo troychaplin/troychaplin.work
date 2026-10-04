@@ -8,7 +8,7 @@
     "build": "tsc -b && vite build",
     "lint": "oxlint",
     "preview": "vite preview",
-    "deploy": "npm run build && sf publish ./dist --prebuilt --space troychaplin-work --spa true"
+    "deploy": "npm run build && sf publish ./dist --prebuilt --space curious-wind --spa true"
   },
   "dependencies": {
     "react": "^19.3.0",
