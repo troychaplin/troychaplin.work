@@ -1,0 +1,60 @@
+# Publishes the site to Spacefast when a version tag (v*) is pushed.
+# Setup and day-to-day usage: docs/deployment.md and docs/releasing.md.
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+  # Re-publish a tag by hand: Actions → Release → Run workflow → pick the tag.
+  workflow_dispatch:
+
+# Never let two releases race for the live channel.
+concurrency:
+  group: spacefast-production
+  cancel-in-progress: false
+
+permissions:
+  contents: write # creates the GitHub Release for the tag
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/v')
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run build
+      - run: npm install -g spacefast
+
+      - name: Publish to Spacefast
+        env:
+          SPACEFAST_TOKEN: ${{ secrets.SPACEFAST_TOKEN }}
+          SPACEFAST_SPACE: ${{ vars.SPACEFAST_SPACE }}
+        run: |
+          sf publish ./dist --prebuilt --spa true \
+            --message "Release ${GITHUB_REF_NAME}" \
+            --json > receipt.json
+          {
+            echo "## Published ${GITHUB_REF_NAME} to Spacefast"
+            echo ""
+            echo "| | |"
+            echo "| --- | --- |"
+            echo "| Live | $(jq -r '.data.space.liveUrl' receipt.json) |"
+            echo "| Version | $(jq -r '.data.version.ref' receipt.json) |"
+            echo "| Immutable URL | $(jq -r '.data.version.immutableUrl' receipt.json) |"
+            echo "| Activation | $(jq -r '.data.activation.outcome // "n/a"' receipt.json) |"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1 \
+            || gh release create "$GITHUB_REF_NAME" --generate-notes --verify-tag

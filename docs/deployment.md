@@ -1,0 +1,171 @@
+# Deployment
+
+The site is hosted on [Spacefast](https://spacefast.com) and served at
+`troychaplin.work`. Production only changes when a version tag (`v*`) is pushed
+to GitHub. Pushes to `main` or any other branch deploy nothing.
+
+To cut a release, see [releasing.md](releasing.md).
+
+## How it works
+
+```text
+git push --follow-tags (v1.4.0)
+        │
+        ▼
+GitHub Actions — .github/workflows/release.yml
+  npm ci → npm run lint → npm run build → npm i -g spacefast
+        │
+        ▼
+sf publish ./dist --prebuilt --spa true   (auth: SPACEFAST_TOKEN, target: SPACEFAST_SPACE)
+        │
+        ▼
+Spacefast space "troychaplin-work"
+  new immutable version (v1, v2, …) → promoted to the live channel
+        │
+        ▼
+https://troychaplin.work   (www.troychaplin.work 308-redirects to it)
+```
+
+1. Pushing a `v*` tag starts the **Release** workflow.
+2. The workflow installs dependencies, lints, and runs `npm run build`, which
+   type-checks and writes the static site to `dist/`.
+3. It installs the `sf` CLI and runs `sf publish` on `dist/`. `--prebuilt` tells
+   Spacefast to upload the folder as-is rather than build it again.
+4. Spacefast stores the upload as a new **immutable version** and promotes it to
+   live. `sf publish` waits until the version is live, so a failed publish fails
+   the job.
+5. The job summary lists the live URL, the Spacefast version (`v12`, …), and
+   that version's permanent URL.
+6. The workflow then creates a GitHub Release for the tag with auto-generated
+   notes, unless one already exists.
+
+When the CLI runs on GitHub Actions, it reads the commit SHA, tag, run URL, and
+actor from the environment and records them on the version. Spacefast's version
+history therefore shows which tag and which workflow run produced each deploy.
+
+### Why GitHub Actions and not Spacefast's GitHub connection
+
+Spacefast can connect to a GitHub repository directly (`sf git connect`), but
+that connection deploys on **branch** pushes: every push to the production
+branch goes live, and every other branch becomes a preview. It has no tag
+trigger. Publishing from Actions on `push: tags` is the documented
+[Publish from CI](https://spacefast.com/docs/ci) lane, and it gives us
+release-only deploys.
+
+Don't connect the repository in the Spacefast dashboard as well. Branch pushes
+would then deploy alongside tags.
+
+### SPA fallback
+
+Routing is client-side (`react-router`), so a hard refresh on `/about` must
+serve `index.html` and not a 404. `--spa true` turns on Spacefast's
+single-page-app fallback. It's passed explicitly in both the workflow and the
+`deploy` script.
+
+## Configuration
+
+| Where | Name | Value |
+| --- | --- | --- |
+| GitHub → Settings → Secrets and variables → Actions → **Secrets** | `SPACEFAST_TOKEN` | A Spacefast API key (`sfa_…`) with the `ci_deploy` preset |
+| GitHub → Settings → Secrets and variables → Actions → **Variables** | `SPACEFAST_SPACE` | `troychaplin-work` (the space slug or its `spc_…` id) |
+
+The workflow fails with `validation_error` if `SPACEFAST_SPACE` is blank. That's
+deliberate: a missing value can't quietly create a second space.
+
+Nothing Spacefast-specific is committed apart from the workflow. `.spacefast/`
+(local CLI state) is gitignored.
+
+## One-time setup
+
+You only do this once, when setting the project up.
+
+### 1. Install the CLI and log in
+
+```bash
+npm install -g spacefast
+```
+
+```bash
+sf login
+```
+
+### 2. Create the space
+
+Publishing for the first time creates the space:
+
+```bash
+npm run build
+```
+
+```bash
+sf publish ./dist --prebuilt --spa true --name "troychaplin.work" --slug troychaplin-work --access public
+```
+
+Spaces are private by default, and `--access public` makes this one public.
+Note the `spc_…` id in the receipt.
+
+### 3. Create the CI API key
+
+```bash
+sf api-keys create --name "GitHub Actions publish" --preset ci_deploy
+```
+
+`ci_deploy` can publish versions and nothing else. It can't manage keys,
+domains, members, or billing. The `sfa_…` secret prints **once**. Paste it
+straight into the GitHub secret below and don't save it anywhere else.
+
+### 4. Add the GitHub secret and variable
+
+In the repository, go to **Settings → Secrets and variables → Actions**:
+
+- **Secrets** tab → New repository secret → `SPACEFAST_TOKEN` = the `sfa_…` key
+- **Variables** tab → New repository variable → `SPACEFAST_SPACE` = `troychaplin-work`
+
+### 5. Connect the domain
+
+```bash
+sf domains add troychaplin.work --space troychaplin-work --role primary
+```
+
+The command prints the DNS records to create at your DNS host: a `TXT`
+verification record plus `A` and `AAAA` records, for both the apex and `www`.
+Copy the exact values from the output.
+
+- **Delete any existing `A`/`AAAA` records** for `troychaplin.work` and `www`
+  first. A leftover record from a previous host blocks verification.
+- Spacefast only uses `A`, `AAAA` and `TXT`. There is no CNAME/ALIAS option.
+
+Spacefast checks DNS on its own every 30 seconds or so for the first ten
+minutes. To check sooner:
+
+```bash
+sf domains check troychaplin.work --space troychaplin-work
+```
+
+Once the domain is `verified` and SSL is `active`, `troychaplin.work` becomes
+the space's live URL. `www.troychaplin.work` redirects to it with a 308, and you
+don't have to set that redirect up.
+
+If something is stuck:
+
+```bash
+sf domains diagnostics troychaplin.work --space troychaplin-work
+```
+
+### 6. Ship the first release
+
+Follow [releasing.md](releasing.md).
+
+## Manual publish (escape hatch)
+
+`npm run deploy` builds locally and publishes `dist/` to the same space from
+your machine, using your `sf login` session. It bypasses tags and CI, so keep it
+for emergencies. The normal path is a tag.
+
+## Reference
+
+- [Publish from CI](https://spacefast.com/docs/ci)
+- [sf publish](https://spacefast.com/docs/cli/publish)
+- [API keys and tokens](https://spacefast.com/docs/api-keys)
+- [Domains](https://spacefast.com/docs/domains)
+- [Git and GitHub connections](https://spacefast.com/docs/git)

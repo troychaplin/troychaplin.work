@@ -7,8 +7,14 @@ npm run dev       # dev server
 npm run build     # typecheck + production build
 npm run preview   # serve the production build locally
 npm run lint      # oxlint
-npm run deploy    # build + publish to Spacefast
+npm run deploy    # manual build + publish (escape hatch; releases go through tags)
 ```
+
+## Deployment
+
+Production deploys to Spacefast when a `v*` tag is pushed (`npm version patch && git push --follow-tags`).
+See [docs/deployment.md](docs/deployment.md) for how it's wired up and
+[docs/releasing.md](docs/releasing.md) for cutting releases and rolling back.
 
 ## Styling
 
@@ -97,5 +103,5 @@ module scripts are deferred.
 declared in `src/App.tsx`; pages live in `src/pages/`.
 
 Because routing is client-side, the deploy must pass `--spa true` or a hard
-refresh on `/about` will 404. It's already in the `deploy` script — see
-`DEPLOY.md`.
+refresh on `/about` will 404. It's already in the release workflow and the
+`deploy` script — see [docs/deployment.md](docs/deployment.md).
