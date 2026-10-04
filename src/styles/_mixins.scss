@@ -6,9 +6,10 @@
 // resolved at compile time.
 // -----------------------------------------------------------------------------
 
-$break-sm: var(--octave--layout-small);
-$break-md: var(--octave--layout-medium);
-$break-lg: var(--octave--layout-large);
+// Keep in sync with the --octave--layout-* tokens in _tokens.scss.
+$break-sm: 600px;
+$break-md: 768px;
+$break-lg: 1152px;
 $break-xl: var(--octave--layout-xlarge);
 
 // Mobile-first. Write the small-screen rules first, then layer with up().
