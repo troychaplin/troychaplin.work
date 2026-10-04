@@ -3,12 +3,13 @@
   "private": true,
   "version": "0.0.2",
   "type": "module",
+  "packageManager": "pnpm@10.34.2",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "oxlint",
     "preview": "vite preview",
-    "deploy": "npm run build && sf publish ./dist --prebuilt --space curious-wind --spa true"
+    "deploy": "pnpm build && sf publish ./dist --prebuilt --space curious-wind --spa true"
   },
   "dependencies": {
     "react": "^19.3.0",

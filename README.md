@@ -3,16 +3,17 @@
 Personal site. Vite + React + TypeScript, deployed as a static SPA to Spacefast.
 
 ```bash
-npm run dev       # dev server
-npm run build     # typecheck + production build
-npm run preview   # serve the production build locally
-npm run lint      # oxlint
-npm run deploy    # manual build + publish (escape hatch; releases go through tags)
+pnpm install      # install dependencies
+pnpm dev          # dev server
+pnpm build        # typecheck + production build
+pnpm preview      # serve the production build locally
+pnpm lint         # oxlint
+pnpm run deploy   # manual build + publish (escape hatch; releases go through tags)
 ```
 
 ## Deployment
 
-Production deploys to Spacefast when a `v*` tag is pushed (`npm version patch && git push --follow-tags`).
+Production deploys to Spacefast when a `v*` tag is pushed (`pnpm version patch && git push --follow-tags`).
 See [docs/deployment.md](docs/deployment.md) for how it's wired up and
 [docs/releasing.md](docs/releasing.md) for cutting releases and rolling back.
 

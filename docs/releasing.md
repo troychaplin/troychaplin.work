@@ -8,15 +8,15 @@ that works is covered in [deployment.md](deployment.md).
 From an up-to-date `main` with a clean working tree:
 
 ```bash
-npm version patch
+pnpm version patch
 ```
 
 ```bash
 git push --follow-tags
 ```
 
-`npm version` bumps `version` in `package.json` and `package-lock.json`, commits
-the change, and creates the matching `v` tag (`v0.0.0` → `v0.0.1`). Use `minor`
+`pnpm version` (pnpm hands this command to npm) bumps `version` in
+`package.json`, commits the change, and creates the matching `v` tag (`v0.0.0` → `v0.0.1`). Use `minor`
 or `major` in place of `patch` as needed. `--follow-tags` pushes the commit and
 the tag together.
 

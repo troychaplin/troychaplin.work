@@ -13,7 +13,7 @@ git push --follow-tags (v1.4.0)
         │
         ▼
 GitHub Actions — .github/workflows/release.yml
-  npm ci → npm run lint → npm run build → npm i -g spacefast
+  pnpm install --frozen-lockfile → pnpm lint → pnpm build → npm i -g spacefast
         │
         ▼
 sf publish ./dist --prebuilt --spa true   (auth: SPACEFAST_TOKEN, target: SPACEFAST_SPACE)
@@ -27,7 +27,7 @@ https://troychaplin.work   (www.troychaplin.work 308-redirects to it)
 ```
 
 1. Pushing a `v*` tag starts the **Release** workflow.
-2. The workflow installs dependencies, lints, and runs `npm run build`, which
+2. The workflow installs dependencies, lints, and runs `pnpm build`, which
    type-checks and writes the static site to `dist/`.
 3. It installs the `sf` CLI and runs `sf publish` on `dist/`. `--prebuilt` tells
    Spacefast to upload the folder as-is rather than build it again.
@@ -102,7 +102,7 @@ The space already exists. Its title is **troychaplin.work**, its slug is
 `spc_c2b3f863773a4f769aa9d418ee269055`. To create one from scratch instead:
 
 ```bash
-npm run build
+pnpm build
 ```
 
 ```bash
@@ -166,7 +166,7 @@ Follow [releasing.md](releasing.md).
 
 ## Manual publish (escape hatch)
 
-`npm run deploy` builds locally and publishes `dist/` to the same space from
+`pnpm run deploy` builds locally and publishes `dist/` to the same space from
 your machine, using your `sf login` session. It bypasses tags and CI, so keep it
 for emergencies. The normal path is a tag.
 
