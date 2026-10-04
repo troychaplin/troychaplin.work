@@ -9,6 +9,7 @@ export interface GroupProps {
     bgType?: 'light' | 'dark';
     maxWidth?: WidthOption;
     contentWidth?: WidthOption;
+    className?: string;
 }
 
 export const Group = ({
@@ -17,6 +18,7 @@ export const Group = ({
     bgType,
     maxWidth = 'aligncontent',
     contentWidth = 'aligncontent',
+    className = '',
 }: GroupProps) => {
     const Component = as;
 
@@ -26,6 +28,7 @@ export const Group = ({
         bgType && 'has-global-padding',
         maxWidth,
         'is-layout-constrained',
+        className,
     ]
         .filter(Boolean)
         .join(' ');

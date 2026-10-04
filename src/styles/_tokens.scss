@@ -1,10 +1,20 @@
 :root {
     // Layout
-    --octave--layout-small: 672px;
-    --octave--layout-medium: 896px;
-    --octave--layout-large: 1024px;
-    --octave--layout-x-large: 1280px;
+    --octave--layout-small: 600px;
+    --octave--layout-medium: 768px;
+    --octave--layout-large: 1152px;
     --octave--layout-full: 100vw;
+
+    // Global Spacing
+    --octave--root-padding-y: 0;
+    --octave--root-padding-x: var(--octave--spacing--50);
+    --octave--root-block-gap: 0;
+    --octave--margin-block-start: var(--octave--spacing--50);
+    
+    --octave--root-padding-top: 0;
+    --octave--root-padding-right: var(--octave--spacing--60);
+    --octave--root-padding-bottom: 0;
+    --octave--root-padding-left: var(--octave--spacing--60);
 
     // Base colors
     --octave--color--white: #fff;

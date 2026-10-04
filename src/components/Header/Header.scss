@@ -2,11 +2,45 @@
     position: sticky;
     top: 0;
     z-index: var(--octave--z-header);
+    padding: var(--octave--spacing--60) var(--octave--root-padding-x);
     background-color: var(--switcher--header-bg);
     border-bottom: 1px solid var(--switcher--header-border);
+
     transition:
         background-color var(--octave--transition-base),
         border-color var(--octave--transition-base);
+
+    // TODO: this would be a good item to move to group when adding flex
+    &.octave-group > .has-global-padding > * + * {
+        margin-block-start: 0;
+    }
+    
+    & > * {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .header__brand {
+        font-family: var(--octave--font-family--inter-tight);
+        font-size: var(--octave--font-size--large);
+        font-weight: var(--octave--weight-medium);
+        color: var(--color-text-strong);
+        text-decoration: none;
+        letter-spacing: var(--tracking-tight);
+
+        &:hover {
+            color: var(--color-accent);
+        }
+    }
+
+    .header__list {
+        display: flex;
+        gap: var(--octave--spacing--60);
+        padding: 0;
+        margin: 0;
+        list-style: none;
+    }
 
     // &__inner {
     //     display: flex;
@@ -14,19 +48,6 @@
     //     gap: var(--octave--spacing--40);
     //     align-items: center;
     //     min-height: var(--header-height);
-    // }
-
-    // &__brand {
-    //     font-family: var(--octave--font-family--inter-tight);
-    //     font-size: var(--octave--font-size--medium);
-    //     font-weight: var(--weight-medium);
-    //     color: var(--color-text-strong);
-    //     text-decoration: none;
-    //     letter-spacing: var(--tracking-tight);
-
-    //     &:hover {
-    //         color: var(--color-accent);
-    //     }
     // }
 
     // &__nav {
