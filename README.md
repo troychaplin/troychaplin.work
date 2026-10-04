@@ -1,21 +1,74 @@
 # troychaplin.work
 
-Personal site. Vite + React + TypeScript, deployed as a static SPA to Spacefast.
+Personal site. Vite + React + TypeScript, deployed as a static SPA to
+[Spacefast](https://spacefast.com) at <https://troychaplin.work>.
+
+## Setup
+
+Requirements:
+
+- **Node.js 22** (CI uses 22)
+- **pnpm 10**: the exact version is pinned in `package.json` →
+  `packageManager`. Running `corepack enable` once makes `pnpm` use it.
 
 ```bash
-pnpm install      # install dependencies
-pnpm dev          # dev server
-pnpm build        # typecheck + production build
-pnpm preview      # serve the production build locally
-pnpm lint         # oxlint
-pnpm run deploy   # manual build + publish (escape hatch; releases go through tags)
+git clone https://github.com/troychaplin/troychaplin.work.git
 ```
 
-## Deployment
+```bash
+cd troychaplin.work && pnpm install
+```
 
-Production deploys to Spacefast when a `v*` tag is pushed (`pnpm version patch && git push --follow-tags`).
-See [docs/deployment.md](docs/deployment.md) for how it's wired up and
-[docs/releasing.md](docs/releasing.md) for cutting releases and rolling back.
+```bash
+pnpm dev
+```
+
+| Command | What it does |
+| --- | --- |
+| `pnpm dev` | Dev server with HMR |
+| `pnpm build` | Type-check, then production build to `dist/` |
+| `pnpm preview` | Serve the production build locally |
+| `pnpm lint` | oxlint |
+| `pnpm run deploy` | Manual build + publish to Spacefast (escape hatch, see below) |
+
+This project uses **pnpm only**. Don't run `npm install`: it creates a
+`package-lock.json` that drifts out of sync with `pnpm-lock.yaml`. When you
+change dependencies, commit `package.json` and `pnpm-lock.yaml` together. CI
+installs with `--frozen-lockfile` and fails if they disagree.
+
+## Publishing
+
+Pushes to `main` deploy nothing. Production only updates when a `v*` tag is
+pushed. That triggers [the Release workflow](.github/workflows/release.yml),
+which lints, builds, and publishes `dist/` to the Spacefast space
+`curious-wind`, served at `troychaplin.work`.
+
+To release, from an up-to-date `main` with a clean working tree:
+
+```bash
+pnpm version patch
+```
+
+```bash
+git push --follow-tags
+```
+
+`pnpm version` bumps `package.json`, commits, and tags (for example `v0.0.5`).
+Use `minor` or `major` in place of `patch` as needed. Then open **Actions →
+Release** on GitHub: the run summary shows the live URL and the Spacefast
+version, and a GitHub Release is created for the tag.
+
+- Roll back: `sf rollback <version> --space curious-wind`
+- Manual publish without CI: `pnpm run deploy` (needs `sf login`). Use
+  `pnpm run deploy`, not `pnpm deploy`, because `deploy` is also a built-in pnpm
+  command and the built-in wins.
+
+More detail:
+
+- [docs/deployment.md](docs/deployment.md): how the pipeline works, the one-time
+  Spacefast/GitHub/DNS setup, and why it's built this way
+- [docs/releasing.md](docs/releasing.md): releasing, rolling back, re-running,
+  rotating the API key, and troubleshooting
 
 ## Styling
 
@@ -43,20 +96,28 @@ import './Header.scss'
   <nav className="header__nav">
 ```
 
-Breakpoint mixins and `$bp-*` variables are auto-injected into every component
+Breakpoint mixins and `$break-*` variables are auto-injected into every component
 stylesheet by `vite.config.ts`, so **don't** write `@use 'abstracts'` in one — a
 second `as *` is a namespace collision. Partials reached via `@use` (such as
 `_base.scss`) are the exception: the injection doesn't reach them, so they
 import it explicitly.
 
-Breakpoints are Sass variables rather than custom properties because custom
-properties are not valid inside `@media` queries. Write mobile-first with `up()`:
+Breakpoints are Sass variables holding plain values (`768px`), not custom
+properties, because `var()` isn't valid inside `@media` queries. Setting
+`$break-md: var(--octave--layout-medium)` compiles in dev, but the production
+build fails with lightningcss reporting `Invalid media query`. The values copy
+the `--octave--layout-*` tokens in `_tokens.scss`, so keep the two in sync.
+(`$break-xl` still points at a token that doesn't exist; give it a pixel value
+before using it.)
+
+Write mobile-first with `minBreakpoint()`, or `maxBreakpoint()` for the rare
+below-a-breakpoint rule:
 
 ```scss
 .thing {
   padding: var(--space-4);
 
-  @include up($bp-md) {
+  @include minBreakpoint($break-md) {
     padding: var(--space-6);
   }
 }

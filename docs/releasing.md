@@ -16,9 +16,17 @@ git push --follow-tags
 ```
 
 `pnpm version` (pnpm hands this command to npm) bumps `version` in
-`package.json`, commits the change, and creates the matching `v` tag (`v0.0.0` → `v0.0.1`). Use `minor`
-or `major` in place of `patch` as needed. `--follow-tags` pushes the commit and
-the tag together.
+`package.json`, commits the change, and creates the matching `v` tag
+(`v0.0.4` → `v0.0.5`). Use `minor` or `major` in place of `patch` as needed.
+`--follow-tags` pushes the commit and the tag together. It refuses to run with
+uncommitted changes, so commit your work first.
+
+Before tagging, run the same checks CI runs. That's quicker than waiting for a
+failed Action:
+
+```bash
+pnpm install --frozen-lockfile && pnpm lint && pnpm build
+```
 
 Tagging by hand works too:
 
@@ -74,12 +82,20 @@ error, either re-run the failed job from the Actions UI, or go to **Actions →
 Release → Run workflow** and pick the tag from the branch/tag selector. The
 workflow only publishes when it runs on a `v*` tag.
 
+If the failure was in the code, such as a broken build or an out-of-sync lock
+file, don't move the tag. Fix it on `main` and release the next version. A
+failed tag published nothing, so leaving it behind is harmless.
+
 ## Troubleshooting
 
 | Symptom | Cause / fix |
 | --- | --- |
 | Job succeeds, but the summary or diagnostics mention `noop_publish` | The build is byte-identical to what's live, so no new version was created. This counts as success. |
-| A new space (e.g. `dist`) appears instead of updating the site | The publish step lost its `--space curious-wind` flag. Restore it, then delete the stray space. |
+| `ERR_PNPM_OUTDATED_LOCKFILE` / `Cannot install with "frozen-lockfile"` | `package.json` changed without updating `pnpm-lock.yaml`. Run `pnpm install`, then commit both files and release again. |
+| `npm ci` errors or a `package-lock.json` reappears | Someone ran npm. Delete `package-lock.json` and use pnpm. |
+| `Cannot find module '…lightningcss.linux-x64-gnu.node'` (or a similar platform binary) | The lock file is missing Linux binaries. That's an npm lock file problem, which shouldn't happen with `pnpm-lock.yaml`. Check that the workflow still installs with pnpm. |
+| Build fails with lightningcss `Invalid media query` | A Sass breakpoint uses `var(...)`. Breakpoints must be plain values, see the Styling section of the README. |
+| A new space (e.g. `dist`) appears instead of updating the site | The publish step lost its `--space curious-wind` flag. Restore it, then delete the stray space in the dashboard. |
 | `401` / `unauthorized` | `SPACEFAST_TOKEN` is missing, revoked, or wrong. See *Rotate the API key* below. |
 | `429` | Publish rate limit for the plan. Wait for the `Retry-After` period and re-run. |
 | Deep link like `/about` returns 404 | The publish lost `--spa true`. Check the workflow step. |

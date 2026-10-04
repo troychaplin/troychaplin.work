@@ -84,9 +84,20 @@ workflow, the `deploy` script in `package.json`, and these docs.
 Nothing Spacefast-specific is committed apart from the workflow. `.spacefast/`
 (local CLI state) is gitignored.
 
+### Package manager
+
+The project uses pnpm, and the version is pinned in `package.json` →
+`packageManager`. `pnpm/action-setup` reads that field, so CI and local use the
+same pnpm. CI installs with `pnpm install --frozen-lockfile`, which fails if
+`pnpm-lock.yaml` doesn't match `package.json`. That's intended: the build uses
+exactly the versions that were committed. Only the `sf` CLI is installed with
+npm (`npm i -g spacefast`), which installs a global tool and doesn't touch the
+project's dependencies.
+
 ## One-time setup
 
-You only do this once, when setting the project up.
+All of this is **done** for `troychaplin.work`. It's recorded here so it can be
+repeated or audited.
 
 ### 1. Install the CLI and log in
 
@@ -101,8 +112,9 @@ sf login
 ### 2. The space
 
 The space already exists. Its title is **troychaplin.work**, its slug is
-`curious-wind` (auto-generated), and its id is
-`spc_c2b3f863773a4f769aa9d418ee269055`. To create one from scratch instead:
+`curious-wind` (auto-generated, which is why it doesn't match the site name),
+and its id is `spc_c2b3f863773a4f769aa9d418ee269055`. Check with
+`sf spaces ls`. To create one from scratch instead:
 
 ```bash
 pnpm build
@@ -113,7 +125,8 @@ sf publish ./dist --prebuilt --spa true --name "troychaplin.work" --access publi
 ```
 
 Spaces are private by default, and `--access public` makes this one public.
-Use the slug from the receipt everywhere this doc says `curious-wind`.
+Use the slug from the receipt everywhere this doc says `curious-wind`, including
+the workflow and the `deploy` script.
 
 ### 3. Create the CI API key
 
@@ -130,7 +143,15 @@ straight into the GitHub secret below and don't save it anywhere else.
 In the repository, go to **Settings → Secrets and variables → Actions → Secrets**
 → New repository secret → `SPACEFAST_TOKEN` = the `sfa_…` key.
 
+That's the only GitHub setting needed. The workflow reads `secrets.*` and
+`vars.*` separately, so a value saved under the wrong tab arrives empty.
+
 ### 5. Connect the domain
+
+`troychaplin.work` is attached to `curious-wind` and verified. A domain can
+serve only one space: if `sf domains add` or `sf domains check` asks to **move**
+the domain from its current space, it's already attached elsewhere. Run
+`sf domains ls --space curious-wind` to confirm before you answer.
 
 ```bash
 sf domains add troychaplin.work --space curious-wind --role primary
@@ -169,7 +190,26 @@ Follow [releasing.md](releasing.md).
 
 `pnpm run deploy` builds locally and publishes `dist/` to the same space from
 your machine, using your `sf login` session. It bypasses tags and CI, so keep it
-for emergencies. The normal path is a tag.
+for emergencies. The normal path is a tag. Use `pnpm run deploy`, not
+`pnpm deploy`, which is a built-in pnpm command.
+
+Don't publish with a bare `sf publish ./dist` and no `--space`: that creates a
+new space (see Configuration above).
+
+## Setup history
+
+Problems hit while wiring this up, and what fixed them:
+
+| Tag | What went wrong | Fix |
+| --- | --- | --- |
+| `v0.0.1` | `npm ci` failed: `package-lock.json` was out of sync with `package.json`. The project had moved to pnpm, but the workflow still used npm and a stale npm lock file from the initial scaffold. | Switched the workflow and docs to pnpm, deleted `package-lock.json`, and pinned `packageManager`. |
+| `v0.0.2` | Build failed: `Cannot find module '../lightningcss.linux-x64-gnu.node'`. The npm lock file regenerated on macOS only listed the macOS binary (a known npm bug with optional platform dependencies). | Fixed by the pnpm switch above. `pnpm-lock.yaml` records every platform. |
+| `v0.0.3` | Published to a brand-new space called `dist` instead of `curious-wind`. `SPACEFAST_SPACE` was saved as a secret but read as a variable, so it arrived empty, and the CLI created a space. | Hard-coded `--space curious-wind` in the workflow and deleted the stray space. |
+| `v0.0.4` | First successful release to `troychaplin.work`. | |
+
+Earlier, before any tag, the production build also failed with lightningcss
+`Invalid media query`, because the Sass breakpoints used `var()`. See the
+Styling section of the README.
 
 ## Reference
 
