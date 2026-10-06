@@ -72,6 +72,19 @@ More detail:
 - [docs/releasing.md](docs/releasing.md): releasing, rolling back, re-running,
   rotating the API key, and troubleshooting
 
+### Analytics
+
+Google Analytics 4 (`G-E0FCWJZTDM`) is added to `index.html` by a small plugin in
+`vite.config.ts`, during `pnpm build` only. `pnpm dev` never loads it, so local
+work doesn't show up in the stats. `pnpm preview` serves the production build,
+so it does load it. To change or remove the tag, edit `GA_MEASUREMENT_ID` or the
+`googleAnalytics()` plugin in `vite.config.ts`.
+
+Route changes happen in the browser without a full page load. GA4 still counts
+each one as a page view through the stream's **Enhanced measurement → Page
+changes based on browser history events** setting, which is on. Turning it off
+would mean only the first page of each visit is recorded.
+
 ## Styling
 
 All styling comes from [Parlour](https://www.npmjs.com/package/@troychaplin/parlour-ui)
