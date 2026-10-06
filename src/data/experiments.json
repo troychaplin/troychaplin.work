@@ -1,0 +1,11 @@
+[
+    {
+        "title": "Parlour UI",
+        "href": "https://troychaplin.github.io/parlour-ui/",
+        "type": "Component Library",
+        "icon": "typescript",
+        "version": "beta 0.1.0",
+        "description": "A zero-config bundler for WordPress plugin and theme assets, built on esbuild.",
+        "footer": "browse the library"
+    }
+]

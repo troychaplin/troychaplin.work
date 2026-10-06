@@ -94,6 +94,20 @@ exactly the versions that were committed. Only the `sf` CLI is installed with
 npm (`npm i -g spacefast`), which installs a global tool and doesn't touch the
 project's dependencies.
 
+The pinned version is pnpm 12, the same as the `parlour-ui` component library.
+pnpm 12 adds two install-time checks, both configured in `pnpm-workspace.yaml`:
+
+- **Minimum release age.** pnpm refuses packages published less than a day ago,
+  to guard against a freshly compromised release. `@troychaplin/*` packages are
+  exempt (`minimumReleaseAgeExclude`), so a new `parlour-ui` version can be used
+  immediately. Third-party packages still wait.
+- **Build scripts.** An install fails if any dependency has a build script that
+  hasn't been explicitly allowed or denied. `allowBuilds` records each decision.
+  `@parcel/watcher` (pulled in by Sass) is denied because it ships prebuilt
+  binaries.
+  When a new dependency trips this check, run `pnpm approve-builds` and commit
+  the updated `pnpm-workspace.yaml`.
+
 ## One-time setup
 
 All of this is **done** for `troychaplin.work`. It's recorded here so it can be
@@ -208,8 +222,10 @@ Problems hit while wiring this up, and what fixed them:
 | `v0.0.4` | First successful release to `troychaplin.work`. | |
 
 Earlier, before any tag, the production build also failed with lightningcss
-`Invalid media query`, because the Sass breakpoints used `var()`. See the
-Styling section of the README.
+`Invalid media query`, because the app's own Sass breakpoints used `var()`. The
+app's global styles have since been replaced by Parlour's, and prototype
+component SCSS uses Parlour's plain-value breakpoint mixins (see the Styling
+section of the README).
 
 ## Reference
 

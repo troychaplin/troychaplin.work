@@ -1,0 +1,83 @@
+[
+    {
+        "title": "Block Accessibility Checks",
+        "href": "https://wordpress.org/plugins/block-accessibility-checks/",
+        "type": "WordPress Plugin",
+        "icon": "wordpress",
+        "version": "version 4.2.2",
+        "description": "A WordPress plugin that checks the accessibility of blocks.",
+        "footer": "download it here"
+    },
+    {
+        "title": "component2block",
+        "href": "https://github.com/troychaplin/component2block",
+        "type": "Storybook.js Addon",
+        "icon": "storybook",
+        "version": "version 0.8.0",
+        "description": "An editorial block theme for writers. Quiet, restrained, theme.json all the way down.",
+        "footer": "install via npm"
+    },
+    {
+        "title": "Veils of Fate: Tales of Eldermoor",
+        "href": "https://veilsoffate.com",
+        "type": "Interactive Story",
+        "icon": "wordpress",
+        "version": "beta 1.0",
+        "description": "The heroes of Eldermoor were never what they seemed. The gem chose you to learn the truth.",
+        "footer": "play it here"
+    },
+    {
+        "title": "Block Finder",
+        "href": "https://wordpress.org/plugins/block-finder/",
+        "type": "WordPress Plugin",
+        "icon": "wordpress",
+        "version": "version 1.1.1",
+        "description": "Block Finder adds a dashboard widget that searches your entire site for any core or custom block.",
+        "footer": "download it here"
+    },
+    {
+        "title": "Comma Sense — Sync CSV to Table",
+        "href": "https://wordpress.org/plugins/comma-sense/",
+        "type": "WordPress Plugin",
+        "icon": "wordpress",
+        "version": "version 1.0.0",
+        "description": "Hand-building tables cell by cell is the final boss nobody asked for. Comma Sense plugs a CSV from your site into a core table block.",
+        "footer": "download it here"
+    },
+    {
+        "title": "Priority Plus Navigation",
+        "href": "https://wordpress.org/plugins/priority-plus-navigation/",
+        "type": "WordPress Plugin",
+        "icon": "wordpress",
+        "version": "version 1.1.0",
+        "description": "A WordPress block plugin that adds Priority Plus pattern functionality to core WordPress navigation block.",
+        "footer": "download it here"
+    },
+    {
+        "title": "Planned Outage",
+        "href": "https://wordpress.org/plugins/planned-outage/",
+        "type": "WordPress Plugin",
+        "icon": "wordpress",
+        "version": "version 1.4.0",
+        "description": "Simple maintenance mode for block themes. Shows a maintenance template to logged-out visitors while allowing logged-in users to browse normally.",
+        "footer": "download it here"
+    },
+    {
+        "title": "Smart Media Replacement",
+        "href": "https://wordpress.org/plugins/smart-media-replacement/",
+        "type": "WordPress Plugin",
+        "icon": "wordpress",
+        "version": "version 1.3.0",
+        "description": "An experimental plugin for WordPress that provides a simplistic way to replace an existing media file and maintain its existing URL.",
+        "footer": "download it here"
+    },
+    {
+        "title": "ReadEase: Text Resizer",
+        "href": "https://wordpress.org/plugins/readease-text-resizer/",
+        "type": "WordPress Plugin",
+        "icon": "wordpress",
+        "version": "version 1.0.0",
+        "description": "ReadEase: Text Resizer is a Gutenberg block plugin that provides text resizing controls for site visitors.",
+        "footer": "download it here"
+    }
+]

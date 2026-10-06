@@ -1,0 +1,10 @@
+# pnpm 12 refuses packages published less than a day ago (minimumReleaseAge).
+# Our own packages are exempt so a fresh parlour-ui release can be used right away.
+minimumReleaseAgeExclude:
+  - '@troychaplin/*'
+  - vite@8.3.3
+
+# pnpm 12 fails the install on any unreviewed build script. @parcel/watcher
+# (pulled in by Sass) ships prebuilt binaries, so its script isn't needed.
+allowBuilds:
+  '@parcel/watcher': false

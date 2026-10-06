@@ -8,8 +8,10 @@ Personal site. Vite + React + TypeScript, deployed as a static SPA to
 Requirements:
 
 - **Node.js 22** (CI uses 22)
-- **pnpm 10**: the exact version is pinned in `package.json` →
-  `packageManager`. Running `corepack enable` once makes `pnpm` use it.
+- **pnpm 12**: the exact version is pinned in `package.json` →
+  `packageManager`, matching the `parlour-ui` component library. Running
+  `corepack enable` once makes `pnpm` use it. pnpm settings live in
+  `pnpm-workspace.yaml`.
 
 ```bash
 git clone https://github.com/troychaplin/troychaplin.work.git
@@ -72,92 +74,77 @@ More detail:
 
 ## Styling
 
-SCSS, compiled by `sass-embedded`. Two layers:
+All styling comes from [Parlour](https://www.npmjs.com/package/@troychaplin/parlour-ui)
+(`@troychaplin/parlour-ui`). The app has no global styles of its own: no tokens,
+reset, fonts, or theme toggle.
 
-**Global** — `src/styles/`, imported once from `src/main.tsx`:
-
-| File | Purpose |
-| --- | --- |
-| `main.scss` | Entry. `@use`s the partials below, in cascade order. |
-| `_fonts.scss` | `@font-face` for the three self-hosted variable families. |
-| `_tokens.scss` | All design tokens as custom properties on `:root`, plus the dark palette. |
-| `_reset.scss` | Reset, including `prefers-reduced-motion`. |
-| `_base.scss` | Bare element styles — headings, links, code, focus. |
-| `_mixins.scss` | Breakpoint variables and mixins. |
-| `_abstracts.scss` | Forwards `_mixins`. Emits no CSS. |
-
-**Per component** — a plain `.scss` file beside the component, imported for its
-side effect. Class names are global, so namespace them BEM-style:
+`src/main.tsx` imports Parlour's full stylesheet once:
 
 ```tsx
-import './Header.scss'
-
-<header className="header">
-  <nav className="header__nav">
+import '@troychaplin/parlour-ui/styles.css'
 ```
 
-Breakpoint mixins and `$break-*` variables are auto-injected into every component
-stylesheet by `vite.config.ts`, so **don't** write `@use 'abstracts'` in one — a
-second `as *` is a namespace collision. Partials reached via `@use` (such as
-`_base.scss`) are the exception: the injection doesn't reach them, so they
-import it explicitly.
+That one file contains the design tokens (`--parlour--*`), base element styles,
+layout classes, every component's CSS, and the `@font-face` rules. The font
+files ship inside the package, and Vite bundles them from the stylesheet.
 
-Breakpoints are Sass variables holding plain values (`768px`), not custom
-properties, because `var()` isn't valid inside `@media` queries. Setting
-`$break-md: var(--octave--layout-medium)` compiles in dev, but the production
-build fails with lightningcss reporting `Invalid media query`. The values copy
-the `--octave--layout-*` tokens in `_tokens.scss`, so keep the two in sync.
-(`$break-xl` still points at a token that doesn't exist; give it a pixel value
-before using it.)
+Parlour has no dark mode, so the site always renders in its light palette
+whatever the OS setting.
 
-Write mobile-first with `minBreakpoint()`, or `maxBreakpoint()` for the rare
-below-a-breakpoint rule:
+### Prototyping components
+
+New components can be prototyped here before they move into Parlour. Give each
+one a folder with a `.scss` file next to it, imported for its side effect:
+
+```tsx
+// src/components/Testimonial/Testimonial.tsx
+import './Testimonial.scss'
+
+export function Testimonial() {
+  return <figure className="parlour-testimonial">…</figure>
+}
+```
+
+Every component `.scss` file automatically gets Parlour's Sass variables and
+breakpoint mixins. `vite.config.ts` injects `@use 'parlour-variables' as *;`
+from the installed package, so don't add that line yourself, or Sass reports a
+namespace collision. What's in scope:
+
+| Kind | Examples |
+| --- | --- |
+| Spacing | `$parlour-spacing-small`, `$parlour-spacing-x-large`, and the `$parlour-spacing` map |
+| Radius | `$parlour-radius-md`, and the `$parlour-radius` map |
+| Breakpoints | `$parlour-viewport-mobile` (600px), `$parlour-viewport-tablet` (768px) |
+| Mixins | `below-mobile`, `above-mobile`, `below-tablet`, `above-tablet` |
+
+Colours, font sizes and other tokens are CSS custom properties. Use them as
+`var(--parlour--color-black)` and so on, since Parlour's stylesheet is loaded
+globally.
 
 ```scss
-.thing {
-  padding: var(--space-4);
+.parlour-testimonial {
+  padding: $parlour-spacing-medium;
+  border-radius: $parlour-radius-md;
+  background-color: var(--parlour--color-neutral-50);
 
-  @include minBreakpoint($break-md) {
-    padding: var(--space-6);
+  @include above-tablet {
+    padding: $parlour-spacing-x-large;
   }
 }
 ```
 
-### Tokens
+Name classes the way Parlour does (`parlour-<component>`, BEM modifiers) so a
+finished prototype moves into Parlour unchanged. Check the name isn't already a
+Parlour component first. Once it ships in a Parlour release, bump
+`@troychaplin/parlour-ui`, switch the import to the package, and delete the
+local copy. `@troychaplin/*` packages are exempt from pnpm's one-day minimum
+release age (see `pnpm-workspace.yaml`), so a fresh release installs straight
+away.
 
-Two tiers. **Primitives** (`--purple-500`, `--space-4`, `--text-xl`) are the same
-in every theme. **Semantic** tokens (`--color-bg`, `--color-text`,
-`--color-accent`, …) say what a value is *for*, and are the only ones that change
-between light and dark. Components should use semantic tokens almost exclusively
-and should not contain raw colour values.
-
-### Type
-
-Three self-hosted variable families, one file per style:
-`--font-heading` is Inter Tight, `--font-body` is Source Serif 4, `--font-mono`
-is JetBrains Mono. Each `@font-face` declares that family's real weight *range*
-(`100 900`, `200 900` and `100 800` respectively — they differ, so don't
-copy one onto another), which is what lets a single file cover every weight.
-Italic faces are declared but fetched only when something renders italic.
-
-## Theming
-
-Three states — System, Light, Dark — driven by `data-theme` on `<html>` and
-persisted to `localStorage`.
-
-- **System** is the *absence* of the attribute, so the `prefers-color-scheme`
-  media query in `_tokens.scss` handles it with no JavaScript involved. It
-  tracks OS changes live, no reload and no `matchMedia` listener needed.
-- **Light / Dark** set `data-theme`. The media query is guarded with
-  `:root:not([data-theme='light'])` so a forced light theme wins over a dark OS.
-
-`src/theme/` holds the context, provider, and `useTheme` hook, split across three
-files so a single file never exports both a component and a non-component (the
-`react/only-export-components` lint rule).
-
-An inline script in `index.html` applies a stored override before first paint to
-avoid a flash of the wrong theme. It must stay inline and non-`module`, since
-module scripts are deferred.
+The variables file is read from the package by path
+(`dist/styles/_parlour-variables.scss`), because Parlour's `exports` map doesn't
+list it. If a Parlour release moves or renames it, the build fails on the
+`@use`. Update the path in `vite.config.ts` to fix it.
 
 ## Routing
 

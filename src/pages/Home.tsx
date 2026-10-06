@@ -1,43 +1,54 @@
-import { Group } from "../components/Group/Group";
+import { Container, Hero, HeroHeader, SectionHeader, GridGroup, CodeBlock, ProjectCard, type ProjectCardProps } from "@troychaplin/parlour-ui"
+import projects from '../data/projects.json'
+
+// JSON values type as plain strings; the cast narrows `icon` to Parlour's BrandIconName.
+const ProjectData = projects as ProjectCardProps[]
+
+export const CodeDataReact = `export const Main = ({ children, hasPadding = true, className, ...rest }: MainProps) => {
+    const rootClasses = ['parlour-main', hasPadding && 'parlour-main--padding', className]
+        .filter(Boolean)
+        .join(' ');
+
+    return (
+        <main className={rootClasses} {...rest}>
+            <div className="alignfull has-global-padding is-layout-constrained entry-content">
+                {children}
+            </div>
+        </main>
+    );
+};`;
 
 export function Home() {
     return (
         <>
-            <h1>Troy Chaplin</h1>
-            <p>Cras tincidunt turpis ac vestibulum lacinia. Suspendisse in felis sodales, sagittis augue ultricies, elementum eros. Suspendisse lobortis tristique rhoncus. Vivamus finibus ligula eu vehicula luctus.</p>
+            <Container color="pale" maxWidth="alignfull" contentWidth="alignwide">
+                <Hero>
+                    <div className="parlour-hero__content">
+                        <HeroHeader
+                            prefix="Building for the open web."
+                            title="Plugins, projects"
+                            titleAccent="& open source contributions"
+                        >
+                            <ul className="parlour-hero-header__stats">
+                                <li>7 released plugins</li>
+                                <li>5 experimental projects</li>
+                            </ul>
+                        </HeroHeader>
+                    </div>
+                    <div className="parlour-hero__code">
+                        <CodeBlock code={CodeDataReact} color="medium" borderRadius="sm" />
+                    </div>
+                </Hero>
+            </Container>
 
-            <Group as="section" bgType="light">
-                <h2>Group Component</h2>
-                <p>Cras tincidunt turpis ac vestibulum lacinia. Suspendisse in felis sodales, sagittis augue ultricies, elementum eros. Suspendisse lobortis tristique rhoncus. Vivamus finibus ligula eu vehicula luctus.</p>
-            </Group>
-
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis hendrerit ex venenatis tortor consequat fermentum. Mauris in lorem massa. In auctor id nunc bibendum sodales. Ut ut magna in nisl pretium molestie non at arcu. Pellentesque efficitur enim vel consectetur tempor. Proin arcu lectus, sagittis ut eleifend vitae, sollicitudin vestibulum.</p>
-            <p>Donec imperdiet felis et libero rutrum, ornare auctor lacus scelerisque. Integer dignissim ac lorem ac rhoncus. Duis efficitur enim eros, nec tempus libero eleifend non. Proin nec convallis sapien.</p>
-            
-            <Group as="section" bgType="light">
-                <h2>Group Component</h2>
-                <p>Cras tincidunt turpis ac vestibulum lacinia. Suspendisse in felis sodales, sagittis augue ultricies, elementum eros. Suspendisse lobortis tristique rhoncus. Vivamus finibus ligula eu vehicula luctus.</p>
-            </Group>
-            
-            <Group as="section" bgType="light" maxWidth="alignwide">
-                <h2>Group Component</h2>
-                <p>Cras tincidunt turpis ac vestibulum lacinia. Suspendisse in felis sodales, sagittis augue ultricies, elementum eros. Suspendisse lobortis tristique rhoncus. Vivamus finibus ligula eu vehicula luctus.</p>
-            </Group>
-
-            <p>Donec imperdiet felis et libero rutrum, ornare auctor lacus scelerisque. Integer dignissim ac lorem ac rhoncus. Duis efficitur enim eros, nec tempus libero eleifend non. Proin nec convallis sapien.</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis hendrerit ex venenatis tortor consequat fermentum. Mauris in lorem massa. In auctor id nunc bibendum sodales. Ut ut magna in nisl pretium molestie non at arcu. Pellentesque efficitur enim vel consectetur tempor. Proin arcu lectus, sagittis ut eleifend vitae, sollicitudin vestibulum.</p>
-
-            <Group as="section" bgType="dark">
-                <h2>Group Component</h2>
-                <p>Cras tincidunt turpis ac vestibulum lacinia. Suspendisse in felis sodales, sagittis augue ultricies, elementum eros. Suspendisse lobortis tristique rhoncus. Vivamus finibus ligula eu vehicula luctus.</p>
-            </Group>
-
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis hendrerit ex venenatis tortor consequat fermentum. Mauris in lorem massa. In auctor id nunc bibendum sodales. Ut ut magna in nisl pretium molestie non at arcu. Pellentesque efficitur enim vel consectetur tempor. Proin arcu lectus, sagittis ut eleifend vitae, sollicitudin vestibulum.</p>
-
-            <Group as="section" bgType="dark" maxWidth="alignfull">
-                <h2>Group Component</h2>
-                <p>Cras tincidunt turpis ac vestibulum lacinia. Suspendisse in felis sodales, sagittis augue ultricies, elementum eros. Suspendisse lobortis tristique rhoncus. Vivamus finibus ligula eu vehicula luctus.</p>
-            </Group>
+            <Container color="light" maxWidth="alignfull" contentWidth="alignwide">
+                <SectionHeader prefix="Releases · Open source" title="Things I ship." />
+                <GridGroup>
+                    {ProjectData.map((project) => (
+                        <ProjectCard key={project.title} {...project} />
+                    ))}
+                </GridGroup>
+            </Container>
         </>
     )
 }

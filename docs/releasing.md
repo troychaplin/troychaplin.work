@@ -92,9 +92,10 @@ failed tag published nothing, so leaving it behind is harmless.
 | --- | --- |
 | Job succeeds, but the summary or diagnostics mention `noop_publish` | The build is byte-identical to what's live, so no new version was created. This counts as success. |
 | `ERR_PNPM_OUTDATED_LOCKFILE` / `Cannot install with "frozen-lockfile"` | `package.json` changed without updating `pnpm-lock.yaml`. Run `pnpm install`, then commit both files and release again. |
+| `ERR_PNPM_MINIMUM_RELEASE_AGE_VIOLATION` | A third-party dependency version is less than a day old. Wait until it's a day old, or pin an older version. `@troychaplin/*` packages are already exempt. |
+| `ERR_PNPM_IGNORED_BUILDS` | A new dependency has a build script nobody has reviewed. Run `pnpm approve-builds`, allow or deny it, and commit `pnpm-workspace.yaml`. |
 | `npm ci` errors or a `package-lock.json` reappears | Someone ran npm. Delete `package-lock.json` and use pnpm. |
 | `Cannot find module '…lightningcss.linux-x64-gnu.node'` (or a similar platform binary) | The lock file is missing Linux binaries. That's an npm lock file problem, which shouldn't happen with `pnpm-lock.yaml`. Check that the workflow still installs with pnpm. |
-| Build fails with lightningcss `Invalid media query` | A Sass breakpoint uses `var(...)`. Breakpoints must be plain values, see the Styling section of the README. |
 | A new space (e.g. `dist`) appears instead of updating the site | The publish step lost its `--space curious-wind` flag. Restore it, then delete the stray space in the dashboard. |
 | `401` / `unauthorized` | `SPACEFAST_TOKEN` is missing, revoked, or wrong. See *Rotate the API key* below. |
 | `429` | Publish rate limit for the plan. Wait for the `Retry-After` period and re-run. |

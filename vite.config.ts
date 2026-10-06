@@ -8,12 +8,16 @@ export default defineConfig({
   css: {
     preprocessorOptions: {
       scss: {
-        // Lets partials be referenced by bare name, e.g. @use 'tokens'.
-        loadPaths: [fileURLToPath(new URL('./src/styles', import.meta.url))],
-        // Puts mixins and breakpoint variables in scope for every .scss entry
-        // so component files need no boilerplate. _abstracts.scss emits no CSS,
-        // so this costs nothing in the output.
-        additionalData: `@use 'abstracts' as *;\n`,
+        // Parlour's generated Sass variables and breakpoint mixins. The file
+        // isn't in the package's exports map, so it's reached by path.
+        loadPaths: [
+          fileURLToPath(
+            new URL('./node_modules/@troychaplin/parlour-ui/dist/styles', import.meta.url),
+          ),
+        ],
+        // Puts $parlour-* variables and the below-/above- breakpoint mixins in
+        // scope for every component .scss file. It emits no CSS.
+        additionalData: `@use 'parlour-variables' as *;\n`,
       },
     },
   },
