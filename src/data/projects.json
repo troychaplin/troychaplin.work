@@ -9,15 +9,6 @@
         "footer": "download it here"
     },
     {
-        "title": "component2block",
-        "href": "https://github.com/troychaplin/component2block",
-        "type": "Storybook.js Addon",
-        "icon": "storybook",
-        "version": "version 0.8.0",
-        "description": "An editorial block theme for writers. Quiet, restrained, theme.json all the way down.",
-        "footer": "install via npm"
-    },
-    {
         "title": "Veils of Fate: Tales of Eldermoor",
         "href": "https://veilsoffate.com",
         "type": "Interactive Story",

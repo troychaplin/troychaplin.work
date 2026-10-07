@@ -7,5 +7,23 @@
         "version": "beta 0.1.0",
         "description": "A zero-config bundler for WordPress plugin and theme assets, built on esbuild.",
         "footer": "browse the library"
+    },
+    {
+        "title": "component2block",
+        "href": "https://github.com/troychaplin/component2block",
+        "type": "Storybook.js Addon",
+        "icon": "storybook",
+        "version": "version 0.8.0",
+        "description": "An editorial block theme for writers. Quiet, restrained, theme.json all the way down.",
+        "footer": "install via npm"
+    },
+    {
+        "title": "Template Parts Language Router",
+        "href": "https://github.com/troychaplin/template-parts-language-router",
+        "type": "Storybook.js Addon",
+        "icon": "storybook",
+        "version": "version 0.8.0",
+        "description": "A plugin to route template parts to the appropriate template file based on the current context. Supports WPML, Polylang, and WordPress locale.",
+        "footer": "install via npm"
     }
 ]

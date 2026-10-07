@@ -1,8 +1,10 @@
 import { Container, Hero, HeroHeader, SectionHeader, GridGroup, CodeBlock, ProjectCard, type ProjectCardProps } from "@troychaplin/parlour-ui"
 import projects from '../data/projects.json'
+import experiments from '../data/experiments.json'
 
 // JSON values type as plain strings; the cast narrows `icon` to Parlour's BrandIconName.
 const ProjectData = projects as ProjectCardProps[]
+const ExperimentData = experiments as ProjectCardProps[]
 
 export const CodeDataReact = `export const Main = ({ children, hasPadding = true, className, ...rest }: MainProps) => {
     const rootClasses = ['parlour-main', hasPadding && 'parlour-main--padding', className]
@@ -31,7 +33,7 @@ export function Home() {
                         >
                             <ul className="parlour-hero-header__stats">
                                 <li>7 released plugins</li>
-                                <li>5 experimental projects</li>
+                                <li>3 experimental projects</li>
                             </ul>
                         </HeroHeader>
                     </div>
@@ -46,6 +48,20 @@ export function Home() {
                 <GridGroup>
                     {ProjectData.map((project) => (
                         <ProjectCard key={project.title} {...project} />
+                    ))}
+                </GridGroup>
+            </Container>
+
+            <Container color="dark" maxWidth="alignfull" contentWidth="alignwide">
+                <SectionHeader prefix="Experiments · Open source" title="Things I experiment with." />
+                <GridGroup>
+                    {ExperimentData.map((experiment) => (
+                        <ProjectCard
+                            key={experiment.id}
+                            backgroundColor="dark"
+                            borderColor="dark"
+                            {...experiment}
+                        />
                     ))}
                 </GridGroup>
             </Container>
