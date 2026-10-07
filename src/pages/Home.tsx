@@ -57,7 +57,7 @@ export function Home() {
                 <GridGroup>
                     {ExperimentData.map((experiment) => (
                         <ProjectCard
-                            key={experiment.id}
+                            key={experiment.title}
                             backgroundColor="dark"
                             borderColor="dark"
                             {...experiment}

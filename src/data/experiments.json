@@ -4,8 +4,8 @@
         "href": "https://troychaplin.github.io/parlour-ui/",
         "type": "Component Library",
         "icon": "typescript",
-        "version": "beta 0.1.0",
-        "description": "A zero-config bundler for WordPress plugin and theme assets, built on esbuild.",
+        "version": "beta 0.2.0",
+        "description": "A token-first React component library that renders the same design language in Storybook and the WordPress Site Editor.",
         "footer": "browse the library"
     },
     {
@@ -14,16 +14,16 @@
         "type": "Storybook.js Addon",
         "icon": "storybook",
         "version": "version 0.8.0",
-        "description": "An editorial block theme for writers. Quiet, restrained, theme.json all the way down.",
+        "description": "Define design tokens once and generate CSS variables, fonts, base styles and a WordPress theme.json for your component library.",
         "footer": "install via npm"
     },
     {
         "title": "Template Parts Language Router",
         "href": "https://github.com/troychaplin/template-parts-language-router",
-        "type": "Storybook.js Addon",
-        "icon": "storybook",
-        "version": "version 0.8.0",
-        "description": "A plugin to route template parts to the appropriate template file based on the current context. Supports WPML, Polylang, and WordPress locale.",
-        "footer": "install via npm"
+        "type": "WordPress Plugin",
+        "icon": "wordpress",
+        "version": "version 0.1.0",
+        "description": "A block that serves the right language version of a template part from files on disk. Works with WPML, Polylang or plain WordPress.",
+        "footer": "view on github"
     }
 ]
