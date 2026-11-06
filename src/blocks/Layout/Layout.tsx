@@ -8,7 +8,7 @@ export interface LayoutProps {
 export function Layout({ children, className = '' }: LayoutProps) {
     return (
         <>
-            <SiteHeader siteTitle="troychaplin.work" siteTitleAccent="troychaplin" />
+            <SiteHeader siteTitle="troychaplin.work" siteTitleAccent="troychaplin" navItems={[{ href: '/blog', label: 'Blog' }]} />
             <InfoBar />
             <Main className={className} hasPadding={false}>
                 {children}
